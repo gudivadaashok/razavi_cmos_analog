@@ -44,7 +44,7 @@
 
 ## 2.1 MOSFET as a Switch
 **What the concept is**
-Using the MOSFET as a voltage-controlled resistor. In the "Deep Triode" region ($V_{DS} \ll 2(V_{GS}-V_{TH})$), the channel acts like a linear resistor controlled by the Gate voltage.
+Using the MOSFET as a voltage-controlled resistor. In the "Deep Triode" region ($V_{DS} \ll V_{GS}-V_{TH}$), the channel acts like a linear resistor controlled by the Gate voltage.
 
 **Why it is used**
 **Sampling & Logic.** It is the basis of all digital logic (CMOS) and analog sampling circuits (Sample-and-Hold). It allows us to pass or block signals with zero static power.
