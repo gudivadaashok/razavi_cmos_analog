@@ -68,3 +68,23 @@ Based on the formula $R_{on} \approx \frac{1}{\mu C_{ox} \frac{W}{L} (V_{GS} - V
 3.  **Use NMOS instead of PMOS:**
     *   **Mechanism:** Electron mobility ($\mu_n$) is typically 2-3 times higher than hole mobility ($\mu_p$).
     *   **Result:** For the same size ($W/L$), an NMOS switch has significantly lower resistance than a PMOS switch. To get the same resistance, a PMOS switch must be 2-3 times wider (more capacitance).
+
+## 5. Harmonic Distortion
+**Question:** What is Harmonic Distortion, and how does it arise in MOSFET switches?
+
+**Answer:**
+**Definition:**
+Harmonic Distortion is a type of non-linearity where the output signal contains frequencies that are integer multiples (harmonics) of the input frequency. If you put in a pure sine wave at $f_0$, a distorted output will contain energy at $2f_0, 3f_0$, etc.
+
+**Cause in MOSFET Switches:**
+In a sampling circuit, the MOSFET acts as a resistor $R_{on}$. Ideally, $R_{on}$ should be constant.
+However, the formula is:
+$$R_{on} \approx \frac{1}{\mu C_{ox} \frac{W}{L} (V_{Gate} - V_{in} - V_{TH})}$$
+
+Notice that $R_{on}$ depends on $V_{in}$.
+1.  As the input signal $V_{in}$ goes up and down, the resistance $R_{on}$ goes up and down.
+2.  This means the time constant $\tau = R_{on} C_L$ is **signal-dependent**.
+3.  A signal-dependent time constant distorts the shape of the sine wave, creating harmonics.
+
+**Why it is bad:**
+It corrupts the purity of the signal. In audio, it sounds like "fuzz" or warmth (if low order). In data converters (ADCs), it destroys the accuracy (ENOB - Effective Number of Bits).

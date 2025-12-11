@@ -99,12 +99,36 @@ To achieve "Two-Stage Gain" (e.g., 100dB) with "One-Stage Speed" (single dominan
 - **Doublets:** The auxiliary amp introduces its own poles, creating pole-zero doublets that can ruin settling time.
 
 ## 9.5 Comparison
-| Topology | Gain | Swing | Speed | Power | Noise |
-|----------|------|-------|-------|-------|-------|
-| **Telescopic** | High | Low | Highest | Low | Low |
-| **Folded Cascode** | Medium | Medium | High | Medium | Medium |
-| **Two-Stage** | Highest | Highest | Low | Medium | Low |
-| **Gain Boosted** | Very High | Low | Medium | High | Medium |
+| Topology | Gain | Output Swing | Speed | Power Efficiency | Noise | Input Range | Comments |
+| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
+| **Telescopic Cascode** | High ($g_m r_o^2$) | **Poor** ($V_{DD} - 5V_{OV}$) | **Highest** | **High** (Current reuse) | Low | Limited | Difficult to buffer (short $V_{in}$ to $V_{out}$). |
+| **Folded Cascode** | Medium ($g_m r_o^2$) | Medium ($V_{DD} - 4V_{OV}$) | High | Medium (2 current legs) | Medium | **Wide** | Easy to buffer. The "workhorse" OTA. |
+| **Two-Stage** | **Highest** ($g_m^2 r_o^2$) | **Best** (Rail-to-Rail) | Low (Miller Comp) | Medium | Low | Wide | Requires compensation. Slower settling. |
+| **Gain Boosted** | Very High ($A_{aux} g_m r_o^2$) | Poor | Medium/High | Low (Aux amps) | Medium | Limited | Issues with pole-zero doublets (slow settling). |
+
+### Explanation of Trade-offs
+1.  **Telescopic Cascode:**
+    *   **Why it's fast:** The signal path consists only of NMOS devices (higher mobility) and has no "folding" nodes.
+    *   **Why it's efficient:** "Current Reuse." The same bias current flows through the input pair and the cascode load, maximizing $g_m$ for a given total power.
+    *   **The Dealbreaker:** The limited output swing and the difficulty in shorting input to output (for unity gain buffers) make it hard to use in general-purpose applications.
+
+2.  **Folded Cascode:**
+    *   **The Compromise:** It solves the input/output range problems of the Telescopic. The input pair is separate from the output stack, allowing the input and output voltages to overlap.
+    *   **The Cost:** It requires two bias current legs (higher power) and has a parasitic pole at the folding node (lower phase margin).
+    *   **Gain Comparison:** While the formula ($g_m r_o^2$) is the same as Telescopic, the actual gain is lower. In Telescopic, all current flows through the output (Current Reuse). In Folded, current is split, and the impedance at the folding node reduces the total $R_{out}$.
+
+3.  **Two-Stage:**
+    *   **The Voltage Swing King:** The second stage is a simple Common Source amplifier, which can swing to within one overdrive voltage ($V_{OV}$) of the rails.
+    *   **The Cost:** Stability is hard. You *must* use Miller compensation, which kills the bandwidth.
+
+4.  **Gain Boosting:**
+    *   **The "Cheat":** It uses active feedback to make the output resistance look massive ($R_{out} \to \infty$).
+    *   **The Catch:** The auxiliary amplifiers add their own poles and zeros. These "doublets" cause the step response to have a slow-settling tail, which is bad for precision switched-capacitor circuits.
+
+5.  **Noise Performance:**
+    *   **Telescopic:** **Best (Lowest Noise).** It has the fewest number of transistors contributing to noise. The cascode devices contribute negligible noise at low frequencies, so only the input pair and the active load current sources matter.
+    *   **Folded Cascode:** **Worse.** It is noisier because the additional current sources in the folding branch contribute their own thermal and flicker noise directly to the output.
+    *   **Two-Stage:** **Good.** The high gain of the first stage divides the noise of the second stage when referred to the input, making the first stage the dominant (and usually low-noise) contributor.
 
 ## 9.6 Output Swing Calculations
 **Concept:**
