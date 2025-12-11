@@ -2,17 +2,17 @@
 
 ## Topic Index
 
-| Syllabus Topic | Questions | Key Concepts Covered |
-| :--- | :--- | :--- |
-| [**1. CMOS Device Modeling**](#topic-1-cmos-device-modeling) | Q1 - Q6 | Body Effect, CLM, Subthreshold, fT, Velocity Saturation, Capacitances |
-| [**2. Single-Stage Amplifiers**](#topic-2-single-stage-amplifiers) | Q7 - Q16 | CS, CD, CG, Cascode, Miller Effect, Diode/Triode Loads, Degeneration |
-| [**3. Differential Amplifiers**](#topic-3-differential-amplifiers) | Q17 - Q23 | Objectives, Active Loads, ICMR, Noise, Active Mirrors, Offsets, CMRR |
-| [**4. Passive & Active Current Mirrors**](#topic-4-passive--active-current-mirrors) | Q24 - Q26 | Types, Cascode, Low-Voltage |
-| [**5. Operational Amplifiers**](#topic-5-operational-amplifiers) | Q27 - Q38 | Topologies, Gilbert Cell, Gain Boosting, Swing, Slew Rate, PSRR, Folded Cascode, GBW |
-| [**6. Noise**](#topic-6-noise) | Q39 - Q44 | Modeling, Correlated/Uncorrelated, Input Referred, Bandwidth, Trade-off, Corner Freq |
-| [**7. Stability & Frequency Compensation**](#topic-7-stability--frequency-compensation) | Q45 - Q51 | Phase Margin, Miller Comp, CMFB, ZVTC, Gain Margin, Step Response, Pole-Zero Doublets |
-| [**8. Bandgap References**](#topic-8-bandgap-references) | Q52 - Q58 | Principle, Start-up, Objectives, Constant-Gm, Noise, Low-Voltage, Hysteresis |
-| [**9. Switched-Capacitor Circuits**](#topic-9-switched-capacitor-circuits) | Q59 - Q67 | Flip-Around, Charge Injection, Objectives, Gain, Multiply-by-Two, Integrator, SC-CMFB, Finite Gain Error, Settling Time, CDS |
+| Syllabus Topic | Questions | Key Concepts Covered | Chapter Notes |
+| :--- | :--- | :--- | :--- |
+| [**1. CMOS Device Modeling**](#topic-1-cmos-device-modeling) | Q1 - Q6 | Body Effect, CLM, Subthreshold, fT, Velocity Saturation, Capacitances | [Chapter 2](./Chapter_02_Basic_MOS_Device_Physics.md) |
+| [**2. Single-Stage Amplifiers**](#topic-2-single-stage-amplifiers) | Q7 - Q16 | CS, CD, CG, Cascode, Miller Effect, Diode/Triode Loads, Degeneration | [Chapter 3](./Chapter_03_Single_Stage_Amplifiers.md) |
+| [**3. Differential Amplifiers**](#topic-3-differential-amplifiers) | Q17 - Q23 | Objectives, Active Loads, ICMR, Noise, Active Mirrors, Offsets, CMRR | [Chapter 4](./Chapter_04_Differential_Amplifiers.md) |
+| [**4. Passive & Active Current Mirrors**](#topic-4-passive--active-current-mirrors) | Q24 - Q26 | Types, Cascode, Low-Voltage | [Chapter 5](./Chapter_05_Current_Mirrors_Biasing.md) |
+| [**5. Operational Amplifiers**](#topic-5-operational-amplifiers) | Q27 - Q38 | Topologies, Gilbert Cell, Gain Boosting, Swing, Slew Rate, PSRR, Folded Cascode, GBW | [Chapter 9](./Chapter_09_10_OpAmps_Stability.md) |
+| [**6. Noise**](#topic-6-noise) | Q39 - Q44 | Modeling, Correlated/Uncorrelated, Input Referred, Bandwidth, Trade-off, Corner Freq | [Chapter 7](./Chapter_07_Noise.md) |
+| [**7. Stability & Frequency Compensation**](#topic-7-stability--frequency-compensation) | Q45 - Q51 | Phase Margin, Miller Comp, CMFB, ZVTC, Gain Margin, Step Response, Pole-Zero Doublets | [Chapter 10](./Chapter_09_10_OpAmps_Stability.md) |
+| [**8. Bandgap References**](#topic-8-bandgap-references) | Q52 - Q58 | Principle, Start-up, Objectives, Constant-Gm, Noise, Low-Voltage, Hysteresis | [Chapter 12](./Chapter_12_Bandgap_References.md) |
+| [**9. Switched-Capacitor Circuits**](#topic-9-switched-capacitor-circuits) | Q59 - Q67 | Flip-Around, Charge Injection, Objectives, Gain, Multiply-by-Two, Integrator, SC-CMFB, Finite Gain Error, Settling Time, CDS | [Chapter 13](./Chapter_13_Switched_Capacitor_Circuits.md) |
 
 ---
 
