@@ -7,7 +7,7 @@ A technique to process analog signals using discrete-time sampling. It replaces 
 **Why it is used**
 **Accuracy.** In CMOS, absolute resistor values vary by $\pm 20\%$. However, the *ratio* of two capacitors ($C_1/C_2$) can be matched to within 0.1%. This allows for extremely precise filters and gain stages.
 
-**The Bad / Backpack**
+**Challenges and Limitations**
 - **Aliasing:** Since it is a sampled system, signals above $f_s/2$ fold back into the baseband.
 - **Clocking:** Requires complex non-overlapping clock generation.
 
@@ -24,7 +24,7 @@ Using a MOS transistor in the deep triode region as a voltage-controlled switch.
 **Why it is used**
 It is a simple, zero-static-power switch.
 
-**The Bad / Backpack**
+**Challenges and Limitations**
 - **Signal Dependent $R_{on}$:** The on-resistance depends on $V_{GS} - V_{TH}$. Since the source voltage is the signal ($V_{in}$), $V_{GS}$ varies with the signal. This modulates $R_{on}$, causing harmonic distortion.
 
 **Practical techniques to mitigate**
@@ -38,7 +38,7 @@ The RC time constant of the switch and sampling capacitor: $\tau = R_{on} C_H$.
 **Why it is used**
 **Settling.** The voltage on the capacitor must settle to within 1 LSB of accuracy within half a clock period ($T/2$).
 
-**The Bad / Backpack**
+**Challenges and Limitations**
 - **Trade-off:** To make it faster (lower $R_{on}$), you need a wider switch. But a wider switch has more parasitic capacitance, which causes charge injection errors.
 
 **Practical techniques to mitigate**
@@ -51,7 +51,7 @@ The ability to capture the exact voltage.
 **Why it is used**
 ADCs require high precision.
 
-**The Bad / Backpack**
+**Challenges and Limitations**
 - **Leakage:** The switch is never perfectly off. Subthreshold leakage drains the charge from the capacitor.
 
 **Practical techniques to mitigate**
@@ -64,7 +64,7 @@ When the MOS switch turns off, the charge in the channel ($Q_{ch} = W L C_{ox} V
 **Why it is used**
 This is the dominant error source in SC circuits.
 
-**The Bad / Backpack**
+**Challenges and Limitations**
 - **Non-linear:** The charge depends on $V_{in}$ (via $V_{OV}$), so the error is signal-dependent (distortion).
 
 **Practical techniques to mitigate**
@@ -82,7 +82,7 @@ A circuit that samples $V_{in}$ on phase 1 and connects the capacitor to the out
 **Why it is used**
 Track-and-Hold (T/H) amplifier for ADCs. The flip-around architecture has a feedback factor of $\beta \approx 1$, which is ideal for speed and power efficiency.
 
-**The Bad / Backpack**
+**Challenges and Limitations**
 - **Offset:** The OpAmp input offset voltage ($V_{os}$) appears directly at the output.
 - **Input Common Mode:** The OpAmp input nodes move from a defined common mode to the signal level (in some simple topologies), or the switches must handle rail-to-rail swings.
 
@@ -101,7 +101,7 @@ A circuit using two capacitors, $C_S$ (Sampling) and $C_F$ (Feedback).
 **Why it is used**
 Precision amplification. The gain depends only on the ratio of capacitor areas ($C_S/C_F$), which can be matched to within 0.1% in CMOS, far better than resistor ratios.
 
-**The Bad / Backpack**
+**Challenges and Limitations**
 - **Capacitive Loading:** The OpAmp must drive $C_F$ in series with $C_S$ (effective load $\approx \frac{C_S C_F}{C_S + C_F}$), plus the load capacitance $C_L$.
 - **Slewing:** Large voltage steps at the output require the OpAmp to slew, limiting the maximum clock frequency.
 
@@ -120,7 +120,7 @@ A specialized amplifier with Gain = 2. It often uses a single capacitor $C_S$ sa
 **Why it is used**
 The core building block of **Pipelined ADCs** (1.5-bit per stage architecture). It generates the "residue" for the next stage.
 
-**The Bad / Backpack**
+**Challenges and Limitations**
 - **Capacitor Mismatch:** If $C_1 \neq C_2$, the gain is not exactly 2. This causes Gain Error, leading to DNL/INL in the ADC.
 - **Finite Gain Error:** Finite OpAmp gain $A$ results in a gain of $\approx 2 (1 - 1/A\beta)$.
 
@@ -136,7 +136,7 @@ A circuit that accumulates charge on a feedback capacitor $C_F$ without resettin
 **Why it is used**
 The heart of **Sigma-Delta ($\Sigma\Delta$) Modulators** and SC Filters. It performs the integration function required for noise shaping or filtering.
 
-**The Bad / Backpack**
+**Challenges and Limitations**
 - **Integrator Leakage:** If the OpAmp has finite DC gain $A$, the pole is not exactly at DC ($z=1$). It moves inside the unit circle ($z = 1 - \epsilon$). The integrator "leaks" charge over time, limiting the precision of low-frequency signal processing.
 - **Parasitic Capacitance:** Parasitics at the input and output nodes can cause gain errors if not handled by a "Parasitic-Insensitive" topology.
 
@@ -154,7 +154,7 @@ It typically consists of:
 **Why it is used**
 **Linearity & Headroom.** Continuous-time CMFB (using resistors) loads the output (reducing gain) and limits swing. SC-CMFB uses capacitors which act as open circuits at DC, preserving the high DC gain of the OpAmp.
 
-**The Bad / Backpack**
+**Challenges and Limitations**
 - **Clock Feedthrough:** The switching action injects charge glitches ("spurs") into the bias line at the clock frequency $f_s$. These spurs can mix with the signal.
 - **Sampled Nature:** It is a discrete-time loop. It can have stability issues if the CMFB loop bandwidth is too close to the switching frequency.
 

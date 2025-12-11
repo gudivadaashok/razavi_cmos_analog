@@ -7,7 +7,7 @@ A circuit that copies a reference current ($I_{REF}$) to an output branch ($I_{O
 **Why it is used**
 **Biasing.** Instead of distributing bias *voltages* (which is dangerous because $V_{TH}$ varies), we distribute *currents*. A central "Golden Current" is generated and mirrored to every block on the chip.
 
-**The Bad / Backpack**
+**Challenges and Limitations**
 - **Channel Length Modulation:** If $V_{DS}$ of the slave differs from the master, the currents won't match due to the finite output resistance ($r_o$). $I_{out} \neq I_{ref}$.
 - **Systematic Mismatch:** If the layout environments differ (e.g., one has a neighbor, one doesn't), stress effects cause mismatch.
 
@@ -22,7 +22,7 @@ Stacking a second transistor (cascode) on top of the mirror device.
 **Why it is used**
 **Precision.** It boosts the output impedance to $g_m r_o^2$. This shields the bottom transistor from $V_{out}$ variations, ensuring $I_{out}$ is incredibly constant (acts like an ideal current source).
 
-**The Bad / Backpack**
+**Challenges and Limitations**
 - **Headroom Penalty:** Standard cascode requires $V_{TH} + 2V_{OV}$ headroom. This is painful in low-voltage designs.
 
 **Practical techniques to mitigate**
@@ -35,7 +35,7 @@ A differential pair with a current mirror acting as the load.
 **Why it is used**
 **Diff-to-Single Conversion.** It takes a differential input current and combines it into a single-ended output voltage. It preserves the gain of both sides (unlike discarding one side).
 
-**The Bad / Backpack**
+**Challenges and Limitations**
 - **Mirror Pole:** The internal node of the mirror creates a pole at $f \approx g_m / C_{gs}$. This is often close to the signal bandwidth, degrading phase margin.
 - **Asymmetry:** The signal path for the positive and negative inputs is different (one goes through the mirror, one is direct). This causes poor high-frequency CMRR.
 
@@ -49,7 +49,7 @@ Slew Rate behavior. When a large step is applied, one side turns off, and the en
 **Why it is used**
 To determine the maximum speed of the amplifier for large signals.
 
-**The Bad / Backpack**
+**Challenges and Limitations**
 - **Current Limit:** Slew rate is strictly limited by $I_{SS}$. $SR = I_{SS} / C_L$.
 
 **Practical techniques to mitigate**
@@ -62,7 +62,7 @@ Gain analysis. $G_m \approx g_{m,in}$. $R_{out} \approx r_{o,n} || r_{o,p}$. Gai
 **Why it is used**
 To design for DC gain and Bandwidth.
 
-**The Bad / Backpack**
+**Challenges and Limitations**
 - **Doublet:** Due to the asymmetry, a pole-zero doublet exists which can affect settling time in precision applications.
 
 **Practical techniques to mitigate**
@@ -75,7 +75,7 @@ Input Common Mode Range (ICMR). The range of input voltages where all transistor
 **Why it is used**
 To ensure the amplifier works near the rails.
 
-**The Bad / Backpack**
+**Challenges and Limitations**
 - **Dead Zones:** A standard NMOS pair cannot work near ground. A PMOS pair cannot work near VDD.
 
 **Practical techniques to mitigate**
@@ -88,7 +88,7 @@ The simplest operational transconductance amplifier. Input pair + Current Mirror
 **Why it is used**
 **Efficiency.** It is the most power-efficient way to get gain. Used extensively as an internal buffer or in non-critical loops.
 
-**The Bad / Backpack**
+**Challenges and Limitations**
 - **Noise:** The noise of the current mirror load contributes directly to the input.
 - **Gain:** Limited to $\sim 40dB$ in modern processes.
 
@@ -102,7 +102,7 @@ Circuits that establish the stable DC operating points ($I_D$, $V_{GS}$) for the
 **Why it is used**
 To make circuit performance independent of Supply Voltage ($V_{DD}$) and Temperature ($T$).
 
-**The Bad / Backpack**
+**Challenges and Limitations**
 - **Positive Feedback:** High-performance bias loops (like Beta-multiplier) use positive feedback and can have a "zero-current" stable state (circuit doesn't start).
 
 **Practical techniques to mitigate**
@@ -115,7 +115,7 @@ Setting the gate voltage of a CS stage to define its current.
 **Why it is used**
 To define $g_m$ and swing.
 
-**The Bad / Backpack**
+**Challenges and Limitations**
 - **Resistive Dividers:** Never bias a gate using a resistive divider from VDD. $V_{GS}$ will vary with VDD, and $I_D$ will vary wildly.
 
 **Practical techniques to mitigate**
@@ -128,7 +128,7 @@ Setting the gate voltage of the Common Gate device.
 **Why it is used**
 To maximize headroom for the device below it.
 
-**The Bad / Backpack**
+**Challenges and Limitations**
 - **Body Effect:** The source of the CG device moves, modulating $V_{TH}$.
 
 **Practical techniques to mitigate**
@@ -141,7 +141,7 @@ Defining the current source load for the follower.
 **Why it is used**
 To ensure the follower can drive the load (sinking current).
 
-**The Bad / Backpack**
+**Challenges and Limitations**
 - **Asymmetric Slewing:** A source follower can source lots of current (via the transistor) but can only sink fixed current (via the bias source).
 
 **Practical techniques to mitigate**
@@ -154,7 +154,7 @@ Setting the tail current $I_{SS}$.
 **Why it is used**
 It defines the Power, Slew Rate, and $G_m$ of the diff pair.
 
-**The Bad / Backpack**
+**Challenges and Limitations**
 - **Noise Injection:** Noise from the tail current source appears as Common Mode noise. If CMRR is poor, it becomes differential noise.
 
 **Practical techniques to mitigate**

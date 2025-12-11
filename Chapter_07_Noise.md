@@ -7,7 +7,7 @@ Noise is a random process. We cannot predict the voltage at a specific time, but
 **Why it is used**
 **Sensitivity Limit.** Noise determines the smallest signal a circuit can process. In an ADC, it determines the maximum resolution (ENOB). In an RF receiver, it determines the sensitivity.
 
-**The Bad / Backpack**
+**Challenges and Limitations**
 - **Physics:** You cannot eliminate noise; you can only trade it for power.
 - **Math:** It requires statistical thinking (RMS, PSD) rather than deterministic algebra.
 
@@ -24,7 +24,7 @@ Power Spectral Density (PSD), $S_v(f)$, measured in $V^2/Hz$. It shows how noise
 **Why it is used**
 To identify which noise sources dominate in the signal bandwidth.
 
-**The Bad / Backpack**
+**Challenges and Limitations**
 - **Two-Sided vs. One-Sided:** Mathematicians use $-\infty$ to $+\infty$ (Two-Sided). Engineers use $0$ to $+\infty$ (One-Sided). Be careful with factors of 2.
 
 **Practical techniques to mitigate**
@@ -37,7 +37,7 @@ The Probability Density Function (PDF). For most electronic noise (thermal, shot
 **Why it is used**
 To predict the probability of rare events (e.g., a large noise spike causing a bit error).
 
-**The Bad / Backpack**
+**Challenges and Limitations**
 - **Crest Factor:** Noise peaks can be much larger than the RMS value. A $3\sigma$ peak happens 0.3% of the time.
 
 **Practical techniques to mitigate**
@@ -51,7 +51,7 @@ To predict the probability of rare events (e.g., a large noise spike causing a b
 **Why it is used**
 To simplify calculation. We usually assume sources are uncorrelated unless stated otherwise.
 
-**The Bad / Backpack**
+**Challenges and Limitations**
 - **Differential Circuits:** Common-mode noise is highly correlated. If you treat it as uncorrelated, you will underestimate the error.
 
 **Practical techniques to mitigate**
@@ -65,7 +65,7 @@ $SNR = 10 \log_{10} \left( \frac{P_{signal}}{P_{noise}} \right) = 20 \log_{10} \
 **Why it is used**
 The ultimate figure of merit for analog signal quality.
 
-**The Bad / Backpack**
+**Challenges and Limitations**
 - **The Ceiling:** Once noise hits the thermal floor ($kT/C$), the only way to improve SNR is to increase signal swing.
 
 **Practical techniques to mitigate**
@@ -82,7 +82,7 @@ A systematic method to calculate the total input-referred noise:
 **Why it is used**
 **Input Referred Noise** allows fair comparison between different topologies regardless of their gain.
 
-**The Bad / Backpack**
+**Challenges and Limitations**
 - **Tedious:** Hand analysis is prone to algebra errors.
 
 **Practical techniques to mitigate**
@@ -99,7 +99,7 @@ Caused by random thermal motion of electrons in conductors.
 **Why it is used**
 It is the fundamental noise floor at room temperature.
 
-**The Bad / Backpack**
+**Challenges and Limitations**
 - **Temperature:** It gets worse as the chip gets hot.
 - **Trade-off:** Lowering resistance ($R$) lowers voltage noise but burns more power.
 
@@ -114,7 +114,7 @@ Caused by "traps" at the silicon-oxide interface capturing and releasing carrier
 **Why it is used**
 It dominates in audio, biological signals, and sensor interfaces.
 
-**The Bad / Backpack**
+**Challenges and Limitations**
 - **CMOS is Dirty:** MOS devices have much worse 1/f noise than BJTs because the current flows along the surface interface.
 - **NMOS vs PMOS:** PMOS devices often have lower 1/f noise (buried channel effect in some processes).
 
@@ -129,7 +129,7 @@ Caused by the discrete nature of charge carriers crossing a potential barrier (l
 **Why it is used**
 It is the dominant noise source in Bipolar Transistors (base and collector current) and Photodiodes. In MOSFETs, it appears as gate leakage noise.
 
-**The Bad / Backpack**
+**Challenges and Limitations**
 - **White Noise:** Like thermal noise, it is spectrally flat (white).
 - **Current Dependent:** It scales linearly with DC current (unlike thermal noise which scales with conductance).
 
@@ -144,7 +144,7 @@ Modeling a noisy circuit as a noiseless circuit with a voltage source and a curr
 **Why it is used**
 To abstract the noise performance into two parameters ($V_n, I_n$).
 
-**The Bad / Backpack**
+**Challenges and Limitations**
 - **Source Impedance:** If the source impedance is high, the current noise ($I_n R_S$) dominates. If low, voltage noise dominates.
 
 **Practical techniques to mitigate**
@@ -160,7 +160,7 @@ $\overline{V_{n,in}^2} \approx \frac{4kT\gamma}{g_m} (1 + \frac{g_{m,load}}{g_{m
 **Why it is used**
 To guide sizing.
 
-**The Bad / Backpack**
+**Challenges and Limitations**
 - **Active Loads:** Active loads (current sources) add noise.
 
 **Practical techniques to mitigate**
@@ -173,7 +173,7 @@ Noise performance is generally worse than CS because the current gain is unity, 
 **Why it is used**
 Impedance matching.
 
-**The Bad / Backpack**
+**Challenges and Limitations**
 - **No Gain:** It doesn't amplify the signal power relative to the noise as well as a CS stage.
 
 **Practical techniques to mitigate**
@@ -186,7 +186,7 @@ A noise generator with gain < 1.
 **Why it is used**
 Buffering.
 
-**The Bad / Backpack**
+**Challenges and Limitations**
 - **Direct Addition:** The gate noise of the follower appears directly at the output. Since the signal is not amplified, the SNR degrades immediately.
 
 **Practical techniques to mitigate**
@@ -199,7 +199,7 @@ The noise of the cascode device (the top transistor) is negligible at low freque
 **Why it is used**
 It allows us to ignore the cascode device in noise calculations.
 
-**The Bad / Backpack**
+**Challenges and Limitations**
 - **High Frequency:** At high frequencies (near the pole at the source of the cascode), its noise contribution rises.
 
 **Practical techniques to mitigate**
@@ -212,7 +212,7 @@ Current mirrors copy noise just like they copy signal.
 **Why it is used**
 Biasing.
 
-**The Bad / Backpack**
+**Challenges and Limitations**
 - **Amplification:** If you mirror a current with a gain of $M$ (multiply), you multiply the noise power by $M$ as well.
 
 **Practical techniques to mitigate**
@@ -225,7 +225,7 @@ $\overline{V_{n,in}^2} = 2 \times \overline{V_{n,device}^2}$.
 **Why it is used**
 Differential operation.
 
-**The Bad / Backpack**
+**Challenges and Limitations**
 - **3dB Penalty:** You have two input devices, so you have twice the noise power (3dB increase) compared to a single-ended stage.
 
 **Practical techniques to mitigate**
@@ -238,7 +238,7 @@ Noise $\propto 1/\sqrt{Power}$.
 **Why it is used**
 To budget power.
 
-**The Bad / Backpack**
+**Challenges and Limitations**
 - **Diminishing Returns:** To reduce noise by 10x (20dB), you need 100x the power.
 
 **Practical techniques to mitigate**
@@ -251,7 +251,7 @@ The "Brick Wall" equivalent bandwidth. For a 1-pole system, $NBW = \frac{\pi}{2}
 **Why it is used**
 To calculate total integrated noise easily: $V_{rms} = \sqrt{PSD \times NBW}$.
 
-**The Bad / Backpack**
+**Challenges and Limitations**
 - **Aliasing:** In sampled systems, wideband noise aliases back into the baseband, increasing the effective noise bandwidth.
 
 **Practical techniques to mitigate**
@@ -264,7 +264,7 @@ Calculating the total area under the noise curve.
 **Why it is used**
 To get the final number (microvolts RMS) that goes into the datasheet.
 
-**The Bad / Backpack**
+**Challenges and Limitations**
 - **1/f Divergence:** The integral of $1/f$ from 0 to $\infty$ is infinite.
 
 **Practical techniques to mitigate**
@@ -277,7 +277,7 @@ Advanced modeling where gate induced noise is correlated with drain noise.
 **Why it is used**
 Critical for RF CMOS design (Noise Figure optimization).
 
-**The Bad / Backpack**
+**Challenges and Limitations**
 - **Complexity:** Requires complex complex-number algebra.
 
 **Practical techniques to mitigate**

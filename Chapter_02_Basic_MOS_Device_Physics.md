@@ -7,7 +7,7 @@ Using the MOSFET as a voltage-controlled resistor. In the "Deep Triode" region (
 **Why it is used**
 **Sampling & Logic.** It is the basis of all digital logic (CMOS) and analog sampling circuits (Sample-and-Hold). It allows us to pass or block signals with zero static power.
 
-**The Bad / Backpack**
+**Challenges and Limitations**
 - **On-Resistance Variation:** $R_{on} \approx \frac{1}{\mu C_{ox} \frac{W}{L} (V_{GS} - V_{TH})}$. Since $V_{GS} = V_{Gate} - V_{in}$, the resistance changes as the signal $V_{in}$ changes. This causes harmonic distortion.
 - **Charge Injection:** When the switch turns off, the charge stored in the channel ($Q = W L C_{ox} V_{OV}$) must go somewhere. It dumps onto the source and drain, causing a voltage error.
 
@@ -23,7 +23,7 @@ Using the MOSFET as a voltage-controlled resistor. In the "Deep Triode" region (
 **Why it is used**
 **Amplification.** We almost always operate transistors in **Saturation** for analog amplifiers because we want high output impedance (current source behavior) to achieve high voltage gain ($A_v = -g_m R_{out}$).
 
-**The Bad / Backpack**
+**Challenges and Limitations**
 - **Headroom:** To stay in saturation, we need $V_{DS} \ge V_{GS} - V_{TH}$ (Overdrive Voltage, $V_{OV}$). This "eats" voltage headroom, limiting signal swing.
 - **Velocity Saturation:** In modern short-channel devices, the current doesn't follow the square law ($I \propto V_{OV}^2$) but becomes linear ($I \propto V_{OV}$), reducing the available transconductance efficiency ($g_m/I_D$).
 
@@ -39,7 +39,7 @@ The threshold voltage $V_{TH}$ changes when the Source is not at the same potent
 **Why it is used**
 It's usually *not* used intentionally; it's a parasitic effect. However, it can be used for "Body Biasing" to dynamically adjust leakage vs. speed in digital circuits.
 
-**The Bad / Backpack**
+**Challenges and Limitations**
 - **Gain Reduction:** In a Source Follower, the body effect acts like a "back gate" that fights the main gate, reducing the gain from $\approx 1$ to $\approx \frac{g_m}{g_m + g_{mb}}$ (approx 0.8).
 - **Headroom Loss:** In stacked circuits (cascodes), the top devices have high $V_{SB}$, increasing their $V_{TH}$ and eating more headroom.
 
@@ -53,7 +53,7 @@ As $V_{DS}$ increases, the pinch-off point moves towards the source, effectively
 **Why it is used**
 It models the finite output impedance of the transistor ($r_o$).
 
-**The Bad / Backpack**
+**Challenges and Limitations**
 - **Finite Gain:** An ideal current source has infinite impedance. CLM limits the impedance to $r_o \propto L/I_D$. This limits the maximum intrinsic gain of a single transistor to $g_m r_o$.
 
 **Practical techniques to mitigate**
@@ -67,7 +67,7 @@ Current doesn't drop to zero immediately below $V_{TH}$. It decays exponentially
 **Why it is used**
 **Ultra-Low Power.** In "Subthreshold" or "Weak Inversion" design, we operate here intentionally to get maximum gain efficiency ($g_m/I_D$) at very low currents (nA range).
 
-**The Bad / Backpack**
+**Challenges and Limitations**
 - **Speed:** It is very slow. $f_T$ is tiny.
 - **Leakage:** In digital, this is "leakage" that drains the battery when the chip is sleeping.
 
@@ -81,7 +81,7 @@ Linearizing the non-linear MOSFET around a DC operating point (Bias point) to an
 **Why it is used**
 To calculate Gain, Bandwidth, and Impedance using linear circuit theory (KCL/KVL).
 
-**The Bad / Backpack**
+**Challenges and Limitations**
 - **Approximation:** It is only valid for *small* signals. If the signal swing is large, the parameters ($g_m$) change, causing distortion.
 
 **Practical techniques to mitigate**

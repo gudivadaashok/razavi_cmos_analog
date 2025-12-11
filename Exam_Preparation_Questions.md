@@ -659,7 +659,7 @@ In most analog circuits, the input-referred noise power is inversely proportiona
 - Similarly, increasing $C$ to reduce $kT/C$ noise requires larger currents to maintain the same bandwidth (Slew Rate $= I/C$).
 
 **Conclusion:**
-Reducing noise voltage by a factor of 2 (6dB) typically requires increasing power by a factor of 4 (12dB).
+Reducing noise by a factor of 2 (6dB) typically requires increasing power by a factor of 4 (12dB).
 
 ---
 

@@ -50,7 +50,7 @@ Separating the functions of Gain and Swing into two stages.
 **Why it is used**
 To achieve Rail-to-Rail output swing (CS stage) while maintaining high gain.
 
-**The Bad / Backpack**
+**Challenges and Limitations**
 - **Stability:** Two high-impedance nodes = Two dominant poles = Oscillation.
 - **Compensation:** Requires Miller Compensation ($C_C$) to split the poles.
 
@@ -63,7 +63,7 @@ Using an auxiliary amplifier to actively regulate the source voltage of a cascod
 **Why it is used**
 To achieve "Two-Stage Gain" (e.g., 100dB) with "One-Stage Speed" (single dominant pole at output).
 
-**The Bad / Backpack**
+**Challenges and Limitations**
 - **Doublets:** The auxiliary amp introduces its own poles, creating pole-zero doublets that can ruin settling time.
 
 ## 9.5 Comparison
@@ -109,7 +109,7 @@ The maximum rate at which the output can change. $SR = I_{tail} / C_{L}$ (for on
 **Why it is used**
 Large-signal speed limit.
 
-**The Bad / Backpack**
+**Challenges and Limitations**
 - **Trade-off:** To double SR, you must double $I_{tail}$ (Power).
 
 ## 9.10 High-Slew-Rate Op Amps
@@ -123,7 +123,7 @@ Techniques to boost Slew Rate without burning static power.
 The ability to reject noise on $V_{DD}$ and Ground.
 - $PSRR = A_{diff} / A_{supply}$.
 
-**The Bad / Backpack**
+**Challenges and Limitations**
 - **High Frequency:** PSRR degrades at high frequency because $C_{gd}$ couples supply noise to the output.
 
 ## 9.12 Noise in Op Amps
@@ -144,7 +144,7 @@ Ensuring that a feedback system does not turn into an oscillator.
 **Why it is used**
 Negative feedback is essential for linearity, but if the phase shift reaches 180° while the loop gain is > 1, the feedback becomes positive, and the circuit oscillates.
 
-**The Bad / Backpack**
+**Challenges and Limitations**
 - **Paranoia:** Designers must ensure stability not just typically, but across all Process, Voltage, and Temperature (PVT) corners and load conditions.
 
 **Practical techniques to mitigate**
@@ -157,7 +157,7 @@ Real circuits have capacitance at every node. Each node creates a pole. Each pol
 **Why it is used**
 To model the frequency response.
 
-**The Bad / Backpack**
+**Challenges and Limitations**
 - **Phase Accumulation:** 3 poles = -270° phase shift. Oscillation is almost guaranteed if you close the loop.
 
 **Practical techniques to mitigate**
@@ -173,7 +173,7 @@ The difference between the phase shift and -180° at the "Unity Gain Frequency" 
 - PM = 60°: Fast, clean settling (optimal).
 - PM = 90°: Slow, overdamped.
 
-**The Bad / Backpack**
+**Challenges and Limitations**
 - **Trade-off:** Higher PM usually means lower Bandwidth.
 
 **Practical techniques to mitigate**
@@ -186,7 +186,7 @@ Intentionally adding a large capacitor to one node to lower its pole frequency.
 **Why it is used**
 To create a Dominant Pole.
 
-**The Bad / Backpack**
+**Challenges and Limitations**
 - **Bandwidth Killer:** It drastically reduces the bandwidth of the amplifier.
 
 **Practical techniques to mitigate**
@@ -199,7 +199,7 @@ Connecting a capacitor $C_C$ between the input and output of the second gain sta
 **Why it is used**
 **Pole Splitting.** The Miller effect multiplies $C_C$ by the gain of the second stage, creating a massive capacitance at the first stage output (Dominant Pole). Simultaneously, it pushes the output pole to a *higher* frequency.
 
-**The Bad / Backpack**
+**Challenges and Limitations**
 - **RHP Zero:** The capacitor $C_C$ provides a feedforward path for current at high frequencies, creating a Right Half Plane Zero. This zero adds phase lag (like a pole) but increases gain, making stability worse.
 
 **Practical techniques to mitigate**
@@ -212,7 +212,7 @@ The maximum rate at which the output voltage can change ($dV/dt$).
 **Why it is used**
 Large-signal speed limit.
 
-**The Bad / Backpack**
+**Challenges and Limitations**
 - **Miller Limit:** In a Miller-compensated OpAmp, the slew rate is limited by the current available to charge the compensation capacitor: $SR = I_{tail} / C_C$.
 
 **Practical techniques to mitigate**
@@ -226,7 +226,7 @@ Feedforward compensation, Nested Miller Compensation (NMC).
 **Why it is used**
 For multi-stage amplifiers (3+ stages) needed in low-voltage designs.
 
-**The Bad / Backpack**
+**Challenges and Limitations**
 - **Pole-Zero Doublets:** These complex schemes often create closely spaced pole-zero pairs that cause "slow tails" in the step response (settling takes forever).
 
 **Practical techniques to mitigate**
@@ -239,7 +239,7 @@ A rigorous mathematical test for stability involving plotting the loop gain in t
 **Why it is used**
 **Ambiguity.** Bode plots can be misleading for "conditionally stable" systems or systems with RHP poles. Nyquist is the absolute truth.
 
-**The Bad / Backpack**
+**Challenges and Limitations**
 - **Unintuitive:** Hard to visualize compared to Bode plots.
 
 **Practical techniques to mitigate**
@@ -252,7 +252,7 @@ The phase dips below -180° and comes back up before the gain crossover.
 **Why it is used**
 **Conditional Stability.** The system is stable *only* if the gain remains high.
 
-**The Bad / Backpack**
+**Challenges and Limitations**
 - **Startup/Clipping:** If the output clips (gain drops to zero) or during power-up, the gain drops, and the system enters the unstable region and oscillates.
 
 **Practical techniques to mitigate**

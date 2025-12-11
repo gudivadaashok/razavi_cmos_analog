@@ -8,7 +8,7 @@ Single-ended signals are referenced to a fixed potential (usually ground). Diffe
 **Noise Immunity.** The "magic" of differential circuits is that they reject "Common Mode" noise. If a noise spike (from supply or substrate) hits both wires equally, the *difference* remains unchanged.
 **Swing:** It doubles the available signal swing ($V_{DD} \to 2V_{DD}$).
 
-**The Bad / Backpack**
+**Challenges and Limitations**
 - **Area & Power:** Requires 2x the components and 2x the power (roughly) compared to a single-ended equivalent.
 - **Complexity:** Requires a tail current source and Common-Mode Feedback (CMFB) if the output is fully differential.
 
@@ -23,7 +23,7 @@ Two source-coupled transistors biased by a constant tail current source ($I_{SS}
 **Why it is used**
 It is the fundamental input stage for almost all OpAmps and comparators. It steers current between the two branches based on the input difference.
 
-**The Bad / Backpack**
+**Challenges and Limitations**
 - **Limited Linear Range:** The circuit is only linear for a small input range ($\Delta V_{in} \approx \sqrt{2} V_{OV}$). Beyond that, it saturates (one side takes all the current).
 - **Offset:** Mismatch between the two transistors (threshold voltage $V_{TH}$ or size $W/L$) creates an input-referred offset voltage.
 
@@ -38,7 +38,7 @@ Understanding the circuit by inspection. If $V_{in1}$ rises, $M_1$ turns on hard
 **Why it is used**
 To quickly verify polarity and feedback loop directions without doing math.
 
-**The Bad / Backpack**
+**Challenges and Limitations**
 - **Intuition Traps:** It's easy to forget about the tail current source's compliance voltage. If the inputs go too low, the tail source enters triode, and the differential action dies.
 
 **Practical techniques to mitigate**
@@ -52,7 +52,7 @@ Small signal transconductance: $G_m = g_m$ (at equilibrium).
 **Why it is used**
 To size the transistors for a specific gain and swing.
 
-**The Bad / Backpack**
+**Challenges and Limitations**
 - **Square Law Limitations:** The equation assumes long-channel behavior. In short-channel devices, the velocity saturation makes the $I-V$ curve more linear but the transconductance lower.
 
 **Practical techniques to mitigate**
@@ -66,7 +66,7 @@ Adding resistors ($R_S$) in series with the sources of the differential pair.
 **Why it is used**
 **Linearization.** It extends the linear input range by dropping the signal across the linear resistors instead of the non-linear gate-source capacitance. $G_m \approx 1/R_S$.
 
-**The Bad / Backpack**
+**Challenges and Limitations**
 - **Noise:** The resistors add thermal noise directly at the input.
 - **Gain Reduction:** Transconductance drops significantly.
 - **Headroom:** The voltage drop $I_{SS} R_S/2$ eats into the headroom.
@@ -81,7 +81,7 @@ How the circuit behaves when both inputs change by the same amount. Ideally, the
 **Why it is used**
 To quantify **CMRR (Common Mode Rejection Ratio)**. High CMRR is crucial to reject supply noise and ground bounce.
 
-**The Bad / Backpack**
+**Challenges and Limitations**
 - **Finite Tail Impedance:** If the tail current source is not perfect (finite $R_{SS}$), common-mode variations change the bias current, which (due to mismatch) creates a differential error.
 - **CM-to-DM Conversion:** Asymmetries in the load or input pair convert CM noise into differential signal.
 
@@ -97,7 +97,7 @@ Replacing passive resistor loads with MOS devices (Diode-connected or Current So
 **Integration:** Resistors are large and inaccurate in CMOS. MOS loads are compact.
 **High Gain:** Current source loads (Active Loads) provide high output impedance and thus high gain.
 
-**The Bad / Backpack**
+**Challenges and Limitations**
 - **Diode Load:** Limits output swing (output cannot go higher than $V_{DD} - V_{TH}$). Low gain.
 - **Current Source Load:** Requires a CMFB circuit to define the output common-mode voltage.
 
@@ -113,7 +113,7 @@ A "stack" of three differential pairs. Two top pairs are cross-coupled and drive
 **Mixer:** Used in RF to mix a signal with a Local Oscillator (LO) for frequency translation.
 **VGA:** Used as a Variable Gain Amplifier by controlling one input as a DC gain control knob.
 
-**The Bad / Backpack**
+**Challenges and Limitations**
 - **Headroom:** Stacking 3 transistors + load is very difficult in low-voltage processes (e.g., 1.2V or 1.0V).
 - **Noise:** The noise of the switching quad (top pairs) contributes significantly to the output.
 
@@ -128,7 +128,7 @@ A negative feedback loop that senses the Common-Mode level of the differential o
 **Why it is used**
 **Defining the Operating Point.** In fully differential amplifiers with high-impedance current source loads (like active mirrors or folded cascodes), the output node is "floating". Small mismatches between the PMOS source current and NMOS sink current will drive the output to the supply rails. CMFB is mandatory to hold the output at mid-rail.
 
-**The Bad / Backpack**
+**Challenges and Limitations**
 - **Stability:** The CMFB loop is a feedback loop itself and can oscillate. It needs its own compensation.
 - **Loading:** The circuit used to sense the output CM (e.g., resistors) can load the differential signal, reducing gain.
 

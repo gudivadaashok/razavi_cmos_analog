@@ -7,7 +7,7 @@ Analyzing how the gain and phase of an amplifier change with frequency due to pa
 **Why it is used**
 To determine the **Bandwidth** (speed) of the circuit and ensure **Stability**.
 
-**The Bad / Backpack**
+**Challenges and Limitations**
 - **Complexity:** Every node in a circuit creates a pole. A simple circuit can have dozens of poles.
 - **Approximation:** We must identify the "Dominant Poles" to make analysis manageable.
 
@@ -18,7 +18,7 @@ A capacitor $C_F$ connected between the input and output of an inverting amplifi
 **Why it is used**
 To explain why the Gate-Drain capacitance ($C_{gd}$) drastically limits the bandwidth of Common-Source amplifiers.
 
-**The Bad / Backpack**
+**Challenges and Limitations**
 - **Input Impedance:** It kills the input impedance at high frequencies.
 - **Pole Splitting:** It pushes the input pole down (lower frequency) and the output pole up.
 
@@ -29,7 +29,7 @@ A simplified way to find poles. For a node $j$, the pole is roughly $\omega_{p,j
 **Why it is used**
 **Inspection.** It allows us to estimate bandwidth without writing full transfer functions.
 
-**The Bad / Backpack**
+**Challenges and Limitations**
 - **Interaction:** It assumes poles are decoupled (isolated). If capacitors connect two high-impedance nodes (like $C_{gd}$), this method fails (use Miller or Zero-Value Time Constant instead).
 
 ## 6.2 Common-Source Stage
@@ -41,7 +41,7 @@ The frequency response is dominated by two poles:
 **Why it is used**
 The baseline for comparison.
 
-**The Bad / Backpack**
+**Challenges and Limitations**
 - **Miller Effect:** High gain ($A_v$) implies high input capacitance, killing the bandwidth if the source resistance $R_S$ is high.
 - **RHP Zero:** $C_{gd}$ creates a Right-Half-Plane zero at $\omega_z = g_m / C_{gd}$, which degrades phase margin.
 
@@ -57,7 +57,7 @@ Ideally a wideband buffer.
 **Why it is used**
 High-speed buffering.
 
-**The Bad / Backpack**
+**Challenges and Limitations**
 - **Inductive Output:** The output impedance $Z_{out}$ can look inductive at high frequencies. If driving a capacitive load, this forms an LC tank and can cause **ringing** or oscillation.
 - **Negative Resistance:** In some conditions, the input impedance can have a negative real part, leading to instability.
 
@@ -81,7 +81,7 @@ A CS stage driving a CG stage.
 **Why it is used**
 **Bandwidth Extension.** It achieves the high gain of a CS stage with the high bandwidth of a CG stage.
 
-**The Bad / Backpack**
+**Challenges and Limitations**
 - **Extra Pole:** The internal node (Source of cascode) creates a pole, but it is usually at high frequency ($g_{m,CG} / C_{par}$).
 
 ## 6.6 Differential Pair
