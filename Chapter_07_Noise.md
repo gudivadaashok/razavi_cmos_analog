@@ -1,5 +1,30 @@
 # Chapter 7: Noise
 
+## Table of Contents
+- [7.1 Statistical Characteristics of Noise](#71-statistical-characteristics-of-noise)
+  - [7.1.1 Noise Spectrum](#711-noise-spectrum)
+  - [7.1.2 Amplitude Distribution](#712-amplitude-distribution)
+  - [7.1.3 Correlated and Uncorrelated Sources](#713-correlated-and-uncorrelated-sources)
+  - [7.1.4 Signal-to-Noise Ratio (SNR)](#714-signal-to-noise-ratio-snr)
+  - [7.1.5 Noise Analysis Procedure](#715-noise-analysis-procedure)
+- [7.2 Types of Noise](#72-types-of-noise)
+  - [7.2.1 Thermal Noise](#721-thermal-noise)
+  - [7.2.2 Flicker Noise (1/f)](#722-flicker-noise-1f)
+  - [7.2.3 Shot Noise](#723-shot-noise)
+- [7.3 Representing Noise in Circuits](#73-representing-noise-in-circuits)
+- [7.4 Noise in Single-Stage Amplifiers](#74-noise-in-single-stage-amplifiers)
+  - [7.4.1 CS](#741-cs)
+  - [7.4.2 CG](#742-cg)
+  - [7.4.3 Source Followers](#743-source-followers)
+  - [7.4.4 Cascode](#744-cascode)
+- [7.5 Noise in Current Mirrors](#75-noise-in-current-mirrors)
+- [7.6 Noise in Differential Pairs](#76-noise-in-differential-pairs)
+- [7.7 Noise/Power Trade-Off](#77-noisepower-trade-off)
+- [7.8 Noise Bandwidth](#78-noise-bandwidth)
+- [7.9 Input Noise Integration](#79-input-noise-integration)
+- [7.10 Appendix: Noise Correlation](#710-appendix-noise-correlation)
+
+
 ## 7.1 Statistical Characteristics of Noise
 **What the concept is**
 Noise is a random process. We cannot predict the voltage at a specific time, but we can predict the *power* (variance) and the *frequency distribution* (spectrum).

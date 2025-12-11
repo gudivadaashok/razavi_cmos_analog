@@ -1,5 +1,19 @@
 # Chapter 12: Bandgap References
 
+## Table of Contents
+- [12.1 General](#121-general)
+- [12.2 Supply-Independent Biasing](#122-supply-independent-biasing)
+- [12.3 Temperature-Independent References](#123-temperature-independent-references)
+  - [12.3.1 Negative-TC Voltage (CTAT)](#1231-negative-tc-voltage-ctat)
+  - [12.3.2 Positive-TC Voltage (PTAT)](#1232-positive-tc-voltage-ptat)
+  - [12.3.3 Bandgap Reference](#1233-bandgap-reference)
+- [12.4 PTAT Generation](#124-ptat-generation)
+- [12.5 Constant-Gm Biasing](#125-constant-gm-biasing)
+- [12.6 Speed and Noise Issues](#126-speed-and-noise-issues)
+- [12.7 Low-Voltage Bandgap References](#127-low-voltage-bandgap-references)
+- [12.8 Case Study](#128-case-study)
+
+
 ## 12.1 General
 **What the concept is**
 A circuit that generates a precise, stable voltage (typically $V_{REF} \approx 1.25V$) that is independent of Process, Voltage (Supply), and Temperature (PVT).

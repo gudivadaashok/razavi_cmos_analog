@@ -1,5 +1,20 @@
 # Chapter 5: Current Mirrors and Biasing Techniques
 
+## Table of Contents
+- [5.1 Basic Current Mirrors](#51-basic-current-mirrors)
+- [5.2 Cascode Current Mirrors](#52-cascode-current-mirrors)
+- [5.3 Active Current Mirrors](#53-active-current-mirrors)
+  - [5.3.1 Large-Signal](#531-large-signal)
+  - [5.3.2 Small-Signal](#532-small-signal)
+  - [5.3.3 Common-Mode Properties](#533-common-mode-properties)
+  - [5.3.4 Five-Transistor OTA Properties](#534-five-transistor-ota-properties)
+- [5.4 Biasing Techniques](#54-biasing-techniques)
+  - [5.4.1 CS Biasing](#541-cs-biasing)
+  - [5.4.2 CG Biasing](#542-cg-biasing)
+  - [5.4.3 Source Follower Biasing](#543-source-follower-biasing)
+  - [5.4.4 Differential Pair Biasing](#544-differential-pair-biasing)
+
+
 ## 5.1 Basic Current Mirrors
 **What the concept is**
 A circuit that copies a reference current ($I_{REF}$) to an output branch ($I_{OUT}$). It consists of a diode-connected "master" device and a "slave" device sharing the same $V_{GS}$.

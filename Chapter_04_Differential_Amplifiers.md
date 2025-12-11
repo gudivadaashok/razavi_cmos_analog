@@ -1,5 +1,17 @@
 # Chapter 4: Differential Amplifiers
 
+## Table of Contents
+- [4.1 Single-Ended vs Differential](#41-single-ended-vs-differential)
+- [4.2 Basic Differential Pair](#42-basic-differential-pair)
+  - [4.2.1 Qualitative Analysis](#421-qualitative-analysis)
+  - [4.2.2 Quantitative Analysis](#422-quantitative-analysis)
+  - [4.2.3 Degenerated Differential Pair](#423-degenerated-differential-pair)
+- [4.3 Common-Mode Response](#43-common-mode-response)
+- [4.4 Differential Pair with MOS Loads](#44-differential-pair-with-mos-loads)
+- [4.5 Gilbert Cell](#45-gilbert-cell)
+- [4.6 Common-Mode Feedback (CMFB)](#46-common-mode-feedback-cmfb)
+
+
 ## 4.1 Single-Ended vs Differential
 **What the concept is**
 Single-ended signals are referenced to a fixed potential (usually ground). Differential signals are carried on two wires with opposite phases ($V^+ = V_{CM} + \Delta V/2$, $V^- = V_{CM} - \Delta V/2$).

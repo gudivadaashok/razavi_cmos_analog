@@ -1,5 +1,29 @@
 # Chapter 3: Single-Stage Amplifiers
 
+## Table of Contents
+- [3.1 Applications](#31-applications)
+- [3.2 General Considerations](#32-general-considerations)
+- [3.3 Common-Source (CS) Stage](#33-common-source-cs-stage)
+  - [3.3.1 CS with Resistive Load](#331-cs-with-resistive-load)
+  - [3.3.2 CS with Diode-Connected Load](#332-cs-with-diode-connected-load)
+  - [3.3.3 CS with Current-Source Load](#333-cs-with-current-source-load)
+  - [3.3.4 CS Stage with Active Load](#334-cs-stage-with-active-load)
+  - [3.3.5 CS Stage with Triode Load](#335-cs-stage-with-triode-load)
+  - [3.3.6 CS Stage with Source Degeneration](#336-cs-stage-with-source-degeneration)
+- [3.4 Source Follower (Common Drain)](#34-source-follower-common-drain)
+- [3.5 Common-Gate Stage](#35-common-gate-stage)
+- [3.6 Cascode Stage](#36-cascode-stage)
+  - [3.6.1 Folded Cascode](#361-folded-cascode)
+- [3.7 Choice of Device Models](#37-choice-of-device-models)
+  - [3.3.5 CS with Triode Load](#335-cs-with-triode-load)
+  - [3.3.6 CS with Source Degeneration](#336-cs-with-source-degeneration)
+- [3.4 Source Follower (Common Drain)](#34-source-follower-common-drain)
+- [3.5 Common-Gate (CG) Stage](#35-common-gate-cg-stage)
+- [3.6 Cascode Stage](#36-cascode-stage)
+  - [3.6.1 Folded Cascode](#361-folded-cascode)
+- [3.7 Choice of Device Models](#37-choice-of-device-models)
+
+
 ## 3.1 Applications
 **What the concept is**
 Single-stage amplifiers are the atomic units of analog design. They are the simplest circuits capable of providing voltage gain, current buffering, or impedance transformation. They consist of a single transistor (or a composite pair like a cascode) and a load.

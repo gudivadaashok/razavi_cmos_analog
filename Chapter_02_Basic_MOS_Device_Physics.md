@@ -1,5 +1,47 @@
 # Chapter 2: Basic MOS Device Physics
 
+## Table of Contents
+- [2.1 MOSFET as a Switch](#21-mosfet-as-a-switch)
+- [2.2 MOS I/V Characteristics (Saturation vs Triode)](#22-mos-iv-characteristics-saturation-vs-triode)
+- [2.3 Second-Order Effects](#23-second-order-effects)
+  - [2.3.1 Body Effect](#231-body-effect)
+  - [2.3.2 Channel Length Modulation (CLM)](#232-channel-length-modulation-clm)
+  - [2.3.3 Subthreshold Conduction](#233-subthreshold-conduction)
+- [2.4 Small Signal Model](#24-small-signal-model)
+  - [2.1.3 MOS Symbols](#213-mos-symbols)
+- [2.2 MOS I/V Characteristics](#22-mos-iv-characteristics)
+  - [2.2.1 Threshold Voltage](#221-threshold-voltage)
+  - [2.2.2 Derivation of I/V Characteristics](#222-derivation-of-iv-characteristics)
+  - [2.2.3 MOS Transconductance](#223-mos-transconductance)
+- [2.3 Second-Order Effects](#23-second-order-effects)
+  - [1. Channel-Length Modulation](#1-channel-length-modulation)
+  - [2. Body Effect](#2-body-effect)
+  - [3. Subthreshold Conduction](#3-subthreshold-conduction)
+  - [4. Mobility Degradation](#4-mobility-degradation)
+  - [5. Velocity Saturation](#5-velocity-saturation)
+  - [6. Short-Channel Effects](#6-short-channel-effects)
+  - [7. Temperature Effects](#7-temperature-effects)
+- [2.4 MOS Device Models](#24-mos-device-models)
+  - [2.4.1 MOS Device Layout](#241-mos-device-layout)
+  - [2.4.2 MOS Device Capacitances](#242-mos-device-capacitances)
+  - [2.4.3 MOS Small-Signal Model](#243-mos-small-signal-model)
+  - [2.4.4 MOS SPICE Models](#244-mos-spice-models)
+  - [2.4.5 NMOS Versus PMOS Devices](#245-nmos-versus-pmos-devices)
+  - [2.4.6 Long-Channel Versus Short-Channel Devices](#246-long-channel-versus-short-channel-devices)
+- [2.5 Appendix A: FinFETs](#25-appendix-a-finfets)
+  - [Structure](#structure)
+  - [Key Features](#key-features)
+- [2.6 Appendix B: Behavior of a MOS Device as a Capacitor](#26-appendix-b-behavior-of-a-mos-device-as-a-capacitor)
+  - [Gate-Channel Capacitor](#gate-channel-capacitor)
+  - [Advantages](#advantages)
+  - [Disadvantages](#disadvantages)
+  - [Design Techniques](#design-techniques)
+- [Summary](#summary)
+  - [Key Concepts](#key-concepts)
+  - [Design Parameters](#design-parameters)
+- [2.6 Common Questions: Device Geometry](#26-common-questions-device-geometry)
+
+
 ## 2.1 MOSFET as a Switch
 **What the concept is**
 Using the MOSFET as a voltage-controlled resistor. In the "Deep Triode" region ($V_{DS} \ll 2(V_{GS}-V_{TH})$), the channel acts like a linear resistor controlled by the Gate voltage.
@@ -1433,3 +1475,16 @@ $$C = W \cdot L \cdot C_{ox}$$
 - Matching: Precision
 
 This foundation is essential for understanding more complex analog circuits in subsequent chapters.
+
+## 2.6 Common Questions: Device Geometry
+
+**Question:** Why is the aspect ratio $W/L$ considered a 2D parameter, not 3D?
+
+**Answer:**
+In planar MOSFET technology (the focus of this text), the transistor is treated as a surface device defined by the layout mask.
+
+1.  **Designer Control (2D):** The designer draws the **Width ($W$)** and **Length ($L$)** on a 2D layout. These are the only geometric parameters available for tuning.
+2.  **Process Control (3rd Dimension):** The vertical dimensions, such as **Oxide Thickness ($t_{ox}$)** and **Junction Depth**, are fixed by the manufacturing process. The oxide thickness is captured in the parameter $C_{ox} = \epsilon_{ox} / t_{ox}$.
+3.  **Current Equation:** The drain current equation $I_D = \frac{1}{2} \mu C_{ox} \frac{W}{L} (V_{GS} - V_{TH})^2$ separates the process parameters ($C_{ox}$) from the design parameters ($W/L$).
+
+*Note: In modern FinFET technologies, the "width" effectively wraps around the 3D fin structure, but for fundamental analog design, we assume planar devices.*

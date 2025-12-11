@@ -1,5 +1,24 @@
 # Chapter 6: Frequency Response of Amplifiers
 
+## Table of Contents
+- [6.1 General Considerations](#61-general-considerations)
+  - [6.1.1 Miller Effect](#611-miller-effect)
+  - [6.1.2 Association of Poles with Nodes](#612-association-of-poles-with-nodes)
+- [6.2 Common-Source Stage](#62-common-source-stage)
+- [6.3 Source Followers](#63-source-followers)
+- [6.4 Common-Gate Stage](#64-common-gate-stage)
+- [6.5 Cascode Stage](#65-cascode-stage)
+- [6.6 Differential Pair](#66-differential-pair)
+  - [6.6.1 With Passive Loads](#661-with-passive-loads)
+  - [6.6.2 With Active Load (Current Mirror)](#662-with-active-load-current-mirror)
+- [6.7 Gain-Bandwidth Trade-Offs](#67-gain-bandwidth-trade-offs)
+  - [6.7.1 One-Pole Circuits](#671-one-pole-circuits)
+  - [6.7.2 Multi-Pole Circuits](#672-multi-pole-circuits)
+- [6.8 Appendix A: Extra Element Theorem (EET)](#68-appendix-a-extra-element-theorem-eet)
+- [6.9 Appendix B: Zero-Value Time Constant (ZVTC)](#69-appendix-b-zero-value-time-constant-zvtc)
+- [6.10 Appendix C: Dual of Miller’s Theorem](#610-appendix-c-dual-of-millers-theorem)
+
+
 ## 6.1 General Considerations
 **What the concept is**
 Analyzing how the gain and phase of an amplifier change with frequency due to parasitic capacitances ($C_{gs}, C_{gd}, C_{db}, C_{sb}$) and load capacitance ($C_L$).

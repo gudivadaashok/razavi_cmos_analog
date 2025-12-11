@@ -1,5 +1,20 @@
 # Chapter 13: Switched-Capacitor Circuits
 
+## Table of Contents
+- [13.1 General](#131-general)
+- [13.2 Sampling Switches](#132-sampling-switches)
+  - [13.2.1 MOSFETs as Switches](#1321-mosfets-as-switches)
+  - [13.2.2 Speed](#1322-speed)
+  - [13.2.3 Precision](#1323-precision)
+  - [13.2.4 Charge Injection Cancellation](#1324-charge-injection-cancellation)
+- [13.3 SC Amplifiers](#133-sc-amplifiers)
+  - [13.3.1 Unity-Gain Sampler/Buffer](#1331-unity-gain-samplerbuffer)
+  - [13.3.2 Non-inverting Amplifier](#1332-non-inverting-amplifier)
+  - [13.3.3 Precision Multiply-by-Two Circuit](#1333-precision-multiply-by-two-circuit)
+- [13.4 SC Integrator](#134-sc-integrator)
+- [13.5 SC Common-Mode Feedback (CMFB)](#135-sc-common-mode-feedback-cmfb)
+
+
 ## 13.1 General
 **What the concept is**
 A technique to process analog signals using discrete-time sampling. It replaces resistors with capacitors and switches. A capacitor $C$ switched at frequency $f_s$ behaves like a resistor $R_{eq} = 1/(f_s C)$.

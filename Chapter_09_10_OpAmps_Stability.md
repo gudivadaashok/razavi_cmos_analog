@@ -1,5 +1,37 @@
 # Chapter 9: Operational Amplifiers
 
+## Table of Contents
+- [9.1 General Considerations](#91-general-considerations)
+  - [9.1.1 Performance Parameters](#911-performance-parameters)
+- [9.2 One-Stage Op Amps](#92-one-stage-op-amps)
+  - [9.2.1 Basic Topologies](#921-basic-topologies)
+  - [9.2.2 Design Procedure](#922-design-procedure)
+  - [9.2.3 Linear Scaling](#923-linear-scaling)
+  - [9.2.4 Folded-Cascode Properties](#924-folded-cascode-properties)
+- [9.3 Two-Stage Op Amps](#93-two-stage-op-amps)
+- [9.4 Gain Boosting (Regulated Cascode)](#94-gain-boosting-regulated-cascode)
+- [9.5 Comparison](#95-comparison)
+- [9.6 Output Swing Calculations](#96-output-swing-calculations)
+- [9.7 Common-Mode Feedback (CMFB)](#97-common-mode-feedback-cmfb)
+  - [9.7.1 Basic Concepts](#971-basic-concepts)
+  - [9.7.2 CM Sensing Techniques](#972-cm-sensing-techniques)
+  - [9.7.3 CM Feedback Techniques](#973-cm-feedback-techniques)
+- [9.8 Input Range Limitations](#98-input-range-limitations)
+- [9.9 Slew Rate](#99-slew-rate)
+- [9.10 High-Slew-Rate Op Amps](#910-high-slew-rate-op-amps)
+- [9.11 Power Supply Rejection (PSRR)](#911-power-supply-rejection-psrr)
+- [9.12 Noise in Op Amps](#912-noise-in-op-amps)
+- [10.1 General Considerations](#101-general-considerations)
+- [10.2 Multipole Systems](#102-multipole-systems)
+- [10.3 Phase Margin (PM)](#103-phase-margin-pm)
+- [10.4 Basic Compensation](#104-basic-compensation)
+- [10.5 Two-Stage Op-Amp Compensation (Miller)](#105-two-stage-op-amp-compensation-miller)
+- [10.6 Slewing](#106-slewing)
+- [10.7 Other Techniques](#107-other-techniques)
+- [10.8 Nyquist Criterion](#108-nyquist-criterion)
+  - [10.8.7 Multiple 180° Crossings](#1087-multiple-180-crossings)
+
+
 ## 9.1 General Considerations
 **What the concept is**
 The OpAmp is the fundamental building block of analog circuits. It is a high-gain, differential-input, single-ended output amplifier.
