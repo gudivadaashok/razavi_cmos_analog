@@ -1,3 +1,30 @@
+# Project Assignment: Current-Mirror Load Differential Amplifier
+
+## Design Specifications
+Design a current-mirror load differential amplifier to satisfy the following specifications:
+
+*   **Supply Voltage:** $V_{DD} = -V_{SS} = 2.5 V$
+*   **Slew Rate (SR):** $\ge 10 V/\mu s$ for $C_L = 5 pF$
+*   **Bandwidth ($f_{-3dB}$):** $\ge 100 kHz$ for $C_L = 5 pF$
+*   **Small-Signal Differential Voltage Gain:** $200$
+*   **Input Common-Mode Range (ICMR):** $-1.2 V \le ICMR \le 1.5 V$
+*   **Power Dissipation ($P_{diss}$):** $\le 1 mW$
+
+### Device Parameters
+*   $\mu_n C_{ox} = 110 \mu A/V^2$, $\mu_p C_{ox} = 50 \mu A/V^2$
+*   $V_{TN} = 0.5 V$, $V_{TP} = -0.5 V$
+*   $\lambda_n = 0.05 V^{-1}$, $\lambda_p = 0.2 V^{-1}$
+*   Channel Length ($L$) = $0.2 \mu m$
+
+## Project Report Requirements
+Your Project Report Should Include the following (in the same order):
+1.  Final design with currents through all devices and node voltages as calculated by SPICE
+2.  SPICE DC Transfer Characteristic
+3.  SPICE small-signal gain vs. frequency plot with $f_{-3dB}$ marked down
+4.  Output voltage as a function of time with SR marked down
+5.  Hand calculations
+
+---
 # Current-Mirror Load Differential Amplifier Design
 
 ## 1. Design Specifications
@@ -207,3 +234,16 @@ CL out 0 5p
     *   Apply a large step input.
     *   Measure slope of $V_{out}$.
     *   Expected slope $\approx 12 V/\mu s$ ($60 \mu A / 5 pF$).
+
+
+```
+* =========================================================
+* DEVICE MODEL DEFINITIONS 
+* =========================================================
+ 
+.model NMOS1 NMOS (LEVEL=1 VTO=0.5V KP=200u LAMBDA=0.2 L=0.2u W=4.7672u GAMMA=0)
+.model NMOS5 NMOS (LEVEL=1 VTO=0.5V KP=200u LAMBDA=0.2 L=0.2u W=1u GAMMA=0)
+ 
+
+.model PMOS3 PMOS (LEVEL=1 VTO=-0.5V KP=50u LAMBDA=0.2 L=0.2u W=0.2u GAMMA=0)
+```

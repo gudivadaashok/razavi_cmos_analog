@@ -1,10 +1,25 @@
+
+Project # 2
+Design a folded cascode operational amplifier to satisfy the following specifications:
+VDD = - VSS = 3 V
+Slew Rate (SR) ≥ 10 V/us f-3aB≥ 100 kHz for CL = 10 pF
+Small-Signal Voltage Gain > 2,000
+-1.5 V ≤ Input Common-Mode Range (ICMR) ≤ 2.0 V Pdiss ≤ 20 mW
+Device Parameters:
+Use Device Parameters Provided in Table 2.1 of Razavi for the 0.5 um channel length
+technology. This means you need to take L = 0.5 um for your design.
+Your Project Report Should include the following (in the same order):
+
+(1) Final design with currents through all devices and node voltages as calculated by
+SPICE
+(2) SPICE DC Transfer Characteristic
+(3) SPICE small-signal gain vs. frequency plot with f -зав mark-down
+(4) Out-put voltage as a function of time with SR mark-down.
+(5) Hand calculations
+
+
 # Folded Cascode Operational Amplifier Design Project (Razavi Fig 9.18)
 
-## 1. Honor Code
-**I pledge on my honor that I have not given or received any unauthorized assistance on this assignment/examination.**
-
-Signed: __________________________  
-Date: ____________________________
 
 ---
 
