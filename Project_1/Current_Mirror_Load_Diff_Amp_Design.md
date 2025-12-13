@@ -18,11 +18,48 @@ Design a current-mirror load differential amplifier to satisfy the following spe
 
 ## Project Report Requirements
 Your Project Report Should Include the following (in the same order):
-1.  Final design with currents through all devices and node voltages as calculated by SPICE
-2.  SPICE DC Transfer Characteristic
-3.  SPICE small-signal gain vs. frequency plot with $f_{-3dB}$ marked down
-4.  Output voltage as a function of time with SR marked down
-5.  Hand calculations
+
+1.  **Final design with currents through all devices and node voltages as calculated by SPICE**
+2.  **SPICE DC Transfer Characteristic**
+3.  **SPICE small-signal gain vs. frequency plot with $f_{-3dB}$ marked down**
+4.  **Output voltage as a function of time with SR marked down**
+5.  **Hand calculations**
+
+### Hand Calculations
+This section, addressed previously, must provide the theoretical foundation for the amplifier design and sizing, resulting in determined currents and device dimensions necessary to meet the specifications (gain, bandwidth, slew rate, ICMR, and power dissipation). Hand calculations should be presented in a logical, orderly, and neat manner. Formulas and equations must be centered, numbered, and explained in English, with all factors and symbols defined.
+
+### SPICE Simulation Requirements
+The subsequent four sections require verifying the design using a SPICE simulator (such as HSPICE, LTSpice, or TINA-TI). These simulations confirm the static bias points, linearity, frequency characteristics, and speed constraints.
+
+#### 1. Final design with currents through all devices and node voltages as calculated by SPICE
+This requirement verifies that the calculated DC operating point is correctly realized in the simulated circuit using the actual device models.
+*   **Analysis Type:** DC Operating Point Analysis (`.op`).
+*   **Purpose:** To compute the steady-state bias voltages and currents of all active components (transistors). This confirms that all transistors are correctly biased in the saturation region and that the design meets the power constraint ($P_{diss} \le 1 mW$).
+*   **Procedure:** Run a DC operating point analysis (`.op`). The simulator output generates a text file listing all node voltages and branch currents.
+*   **Output Requirement:** The report must include the resulting SPICE output (or a table derived from it) detailing the drain current ($I_D$) for every transistor ($M_1$ through $M_4$ and $M_{tail}$) and the DC voltage at critical nodes (e.g., input source node, output node, gates of current mirrors).
+
+#### 2. SPICE DC Transfer Characteristic
+This plot demonstrates the amplifier's input-output relationship, confirming the specified linearity and the operational range of the input stage.
+*   **Analysis Type:** DC Sweep Analysis (`.dc`).
+*   **Purpose:** To measure the output voltage as the differential input voltage is swept across its operational range. This confirms that the amplifier operates linearly within the specified Input Common-Mode Range (ICMR), defined as $-1.2 V \le ICMR \le 1.5 V$.
+*   **Procedure:** Sweep one input voltage (e.g., $V_{in,1}$) while holding the other input voltage (e.g., $V_{in,2}$) constant at the input common-mode voltage ($V_{CM}$), or sweep the differential input voltage ($V_{in,diff}$).
+*   **Output Requirement:** The report must include a plot showing the differential output voltage ($V_{out}$) versus the differential input voltage ($V_{in,diff}$).
+
+#### 3. SPICE small-signal gain vs. frequency plot with $f_{-3dB}$ marked down
+This plot confirms the amplifier's gain and bandwidth performance by measuring the frequency response.
+*   **Analysis Type:** AC Analysis (`.ac`).
+*   **Purpose:** To measure the open-loop gain ($A_{OL}$) versus frequency. This verifies the specified gain of 200 and the required bandwidth ($f_{-3dB} \ge 100 kHz$).
+*   **Procedure:** Configure the simulation command (`.ac`) to sweep the frequency over a desired range (e.g., starting at 1 Hz up to a frequency beyond the expected unity-gain bandwidth). The input source must be set with an AC amplitude (e.g., 1 V).
+    *   The open-loop gain analysis plots the magnitude (usually in dB) and phase versus frequency. The magnitude is typically plotted as $dB(V_{out}/V_{in})$.
+*   **Output Requirement:** The report must include the magnitude plot (Gain in dB vs. Frequency in Hz) with the -3dB frequency ($f_{-3dB}$) marked. This frequency is where the gain drops to 0.707 times the low-frequency gain (or 3 dB down from the mid-band gain).
+
+#### 4. Output voltage as a function of time with SR marked down
+This simulation verifies the large-signal speed limitation of the amplifier, known as the slew rate.
+*   **Analysis Type:** Transient Analysis (`.tran`).
+*   **Purpose:** To determine how quickly the output voltage can change in response to a large input step, confirming the Slew Rate constraint ($SR \ge 10 V/\mu s$).
+*   **Procedure:** Configure the amplifier (e.g., in a unity-gain configuration if necessary, or simply applying a step input to the differential input). Apply a large input step or square wave signal, ensuring the input signal's rise time is shorter than the amplifier's expected slew rate. Use the appropriate SPICE transient command (`.tran`).
+    *   The Slew Rate (SR) is calculated by measuring the slope of the output signal's rising or falling edge during the non-linear large-signal transition: $SR = \Delta V_{out} / \Delta t$.
+*   **Output Requirement:** The report must include the plot of output voltage ($V_{out}$) versus time, clearly showing a large-signal transition and specifying the resulting Slew Rate (SR).
 
 ---
 # Current-Mirror Load Differential Amplifier Design

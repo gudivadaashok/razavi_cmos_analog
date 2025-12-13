@@ -1,0 +1,110 @@
+================================================================================
+              RAZAVI FIGURE 9.18 - FOLDED CASCODE OP-AMP (NMOS INPUT)
+================================================================================
+
+This schematic corresponds to your netlist 'FOLDED_CASCODE_OPAMP.cir'.
+Follow the "10 Easy Steps" below to draw it exactly like the textbook.
+
+      VDD (3.0V)
+          |
+    +-----+-------------------------+-------------------------+
+    |                               |                         |
+    |  (Bias)                       | (Bias)                  | (Bias)
+   [ ] Mb2_src                     [ ] M3                    [ ] M4
+    |                               |                         |
+    +--- node_b2_high (Bias)        +-----------+-------------+
+    |                                           |
+   [ ] Mb2_casc                             (Folding Nodes)
+    |                                     X     |     Y
+    +--- node_b2 (Bias) ------------------+     |     +------------------+
+    |                                     |     |     |                  |
+    |                                     |     |     |                  |
+    |                                    [ ] M6 |    [ ] M5              |
+    |                                     |     |     |                  |
+    |                                     |     |     |                  |
+    |                                     |     |     |                  |
+    |                                     |     |     |                  |
+    |                                     |     |     |                  |
+    |                                     |     |     |                  |
+    |                                     |    [ ] M1 |                  |
+    |                                     |     |    [ ] M2              |
+    |                                     |     |     |                  |
+    |                                     |     +--+--+                  |
+    |                                     |        |                     |
+    |                                     |       [ ] M11 (Tail)         |
+    |                                     |        |                     |
+    |                                     |       VSS                    |
+    |                                     |                              |
+    |                                     |                              |
+    |                                   node_z                          out
+    |                                     |                              |
+    |                                    [ ] M8                         [ ] M7
+    |                                     |                              |
+    +--- node_b3 (Bias) ------------------+------------------------------+
+    |                                     |                              |
+    |                                   node_v                         node_u
+    |                                     |                              |
+    |                                    [ ] M10                        [ ] M9
+    |                                     |                              |
+    |                                     +-------------+----------------+
+    |                                     |             |
+    |                                     |             |
+   VSS                                   VSS           VSS
+
+================================================================================
+                           10 EASY STEPS TO DRAW
+================================================================================
+
+1.  **Draw the Rails**: Draw a horizontal line at the top for VDD and a horizontal line at the bottom for VSS.
+
+2.  **Draw the Input Pair (M1, M2)**:
+    - Draw two NMOS transistors in the middle.
+    - Connect their sources together.
+    - Connect the common source to a Tail Current Source (M11) going down to VSS.
+    - Label the gates 'inp' (Left) and 'inn' (Right).
+
+3.  **Draw the Top Current Sources (M3, M4)**:
+    - Draw two PMOS transistors at the top, connected to VDD.
+    - These supply current to the branches below.
+
+4.  **Create the Folding Nodes (X, Y)**:
+    - Connect the Drain of M3 to the Drain of M1. This is node **X**.
+    - Connect the Drain of M4 to the Drain of M2. This is node **Y**.
+
+5.  **Draw the PMOS Cascodes (M5, M6)**:
+    - Draw two PMOS transistors *below* the folding nodes (or beside them, but electrically they connect to X and Y).
+    - Connect the Source of M6 to node **X**.
+    - Connect the Source of M5 to node **Y**.
+    - Connect their gates together to a bias voltage (`node_b2`).
+
+6.  **Draw the Bottom Current Mirror (M7, M8, M9, M10)**:
+    - This is the load at the bottom.
+    - Draw two vertical stacks of NMOS transistors.
+    - Left Stack: M8 (top) and M10 (bottom).
+    - Right Stack: M7 (top) and M9 (bottom).
+
+7.  **Connect the Cascodes to the Mirror**:
+    - Connect the Drain of M6 to the Drain of M8 (Node `node_z`).
+    - Connect the Drain of M5 to the Drain of M7 (Node `out`). **This is your Output!**
+
+8.  **Connect the Mirror Gates**:
+    - **M10 & M9 (Main Mirror)**: Connect their gates together. Connect them to the Drain of M10 (`node_v`). This makes M10 diode-connected.
+    - **M8 & M7 (Cascode Mirror)**: Connect their gates together to a bias voltage (`node_b3`).
+
+9.  **Connect Sources and Bulks**:
+    - Connect Sources of M9 and M10 to VSS.
+    - Connect Bulks of all NMOS to their Sources (or VSS).
+    - Connect Bulks of all PMOS to their Sources (or VDD).
+
+10. **Add Bias Circuits (Optional)**:
+    - Draw the bias strings (Mb1, Mb2, Mb3) on the side to generate `node_b1`, `node_b2`, `node_b3`.
+
+================================================================================
+                           NETLIST MAPPING
+================================================================================
+- **M1, M2**: Input Differential Pair (NMOS)
+- **M3, M4**: Top Current Source Loads (PMOS)
+- **M5, M6**: Folding Cascode Transistors (PMOS)
+- **M7, M8**: Bottom Cascode Transistors (NMOS)
+- **M9, M10**: Bottom Current Mirror Transistors (NMOS)
+- **M11**: Tail Current Source (NMOS)

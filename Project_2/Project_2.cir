@@ -1,0 +1,66 @@
+***** FOLDED CASCODE OPAMP - NMOS INPUT *****
+
+.model NMOS_05 nmos level=1 vto=0.7 kp=134u gamma=0.45 phi=0.9 lambda=0.1
+.model PMOS_05 pmos level=1 vto=-0.8 kp=38u gamma=0.45 phi=0.9 lambda=0.2
+
+VDD vdd 0 DC 3.0
+VSS vss 0 DC -3.0
+
+* Bias Circuit
+IREF1 vdd node_b1 100u
+Mb1 node_b1 node_b1 vss vss NMOS_05 W=10u L=0.5u
+
+IREF2 node_b2 vss 100u
+Mb2_src node_b2_high node_b2_high vdd vdd PMOS_05 W=15u L=0.5u
+Mb2_casc node_b2 node_b2 node_b2_high node_b2_high PMOS_05 W=15u L=0.5u
+
+IREF3 vdd node_b3 100u
+Mb3_sink node_b3_low node_b3_low vss vss NMOS_05 W=10u L=0.5u
+Mb3_casc node_b3 node_b3 node_b3_low node_b3_low NMOS_05 W=10u L=0.5u
+
+* Input Signals
+Vin_p inp 0 DC 0 AC 1 PULSE(-1 1 1u 10n 10n 5u 10u)
+Vin_n inn 0 DC 0
+
+* Tail Current Source
+M11 tail node_b1 vss vss NMOS_05 W=130u L=0.5u
+
+* Differential Input Pair
+M1 X inp tail tail NMOS_05 W=1500u L=0.5u
+M2 Y inn tail tail NMOS_05 W=1500u L=0.5u
+
+* PMOS Top Sources
+M3 X node_b2_high vdd vdd PMOS_05 W=150u L=0.5u
+M4 Y node_b2_high vdd vdd PMOS_05 W=150u L=0.5u
+
+* PMOS Folding Cascodes
+M5 out node_b2 Y Y PMOS_05 W=200u L=0.5u
+M6 node_z node_b2 X X PMOS_05 W=200u L=0.5u
+
+* NMOS Load Mirror
+M8 node_z node_b3 node_v node_v NMOS_05 W=97u L=0.5u
+M10 node_v node_v vss vss NMOS_05 W=100u L=0.5u
+
+* NMOS Output Stage
+M7 out node_b3 node_u node_u NMOS_05 W=90u L=0.5u
+M9 node_u node_v vss vss NMOS_05 W=90u L=0.5u
+
+* Load
+CL out 0 10pF
+RL out 0 250k
+
+* --- Simulation Commands ---
+.op
+
+* ~-For DC sweep-~
+*.dc Vin_p -0.02 0.02 0.0001
+
+* -~AC analysis-~
+* .ac dec 10 1 100meg
+
+* ~- Transient ~-:
+* .tran 0.01u 10u
+*.meas TRAN SR_rise DERIV V(out) WHEN time=1.05u
+*.meas TRAN SR_fall DERIV V(out) WHEN time=6.05u
+
+.end
