@@ -131,3 +131,358 @@ Next steps
 - I can add example LTspice netlists, a reusable simulation template, and a small gm/ID sizing helper.
 
 
+-----
+
+
+# README — Analog CMOS IC Design (Razavi, 2nd Edition)
+## Structured Explanation & Study Guide Prompt
+
+### Source Text
+**Design of Analog CMOS Integrated Circuits, Second Edition**  
+Author: **Behzad Razavi**
+
+
+
+---
+
+## General Instructions (Apply to ALL Chapters)
+
+For each chapter listed below, provide a **well-structured explanation** including:
+
+1. **Chapter Overview**
+   - Purpose of the chapter
+   - Key problems addressed
+   - Where it fits in analog IC design
+
+2. **Key Concepts & Definitions**
+   - Clear definitions of all important terms
+   - Physical intuition where applicable
+
+3. **Core Equations**
+   - Present all major equations using LaTeX
+   - Provide step-by-step derivations
+   - Clearly state assumptions and approximations
+   - Indicate validity ranges (e.g., long-channel, saturation)
+
+4. **Conceptual Diagrams**
+   - ASCII block diagrams or labeled schematics
+   - Clearly indicate signal flow and biasing
+   - Explain what each diagram demonstrates
+
+5. **Typical Circuit Architectures**
+   - List and explain standard topologies
+   - Compare alternatives where relevant
+
+6. **Design Tradeoffs**
+   - Gain vs bandwidth
+   - Noise vs power
+   - Linearity vs headroom
+   - Accuracy vs complexity
+
+7. **Performance Metrics**
+   - Definitions and formulas
+   - Typical numerical ranges
+   - How each metric scales with device sizing and bias
+
+8. **Practical Design Considerations**
+   - Device sizing heuristics
+   - Layout and matching issues
+   - Headroom and low-voltage constraints
+   - Temperature and process sensitivity
+
+9. **Short Worked Examples**
+   - Numerical calculations with realistic parameters
+
+---
+
+## Chapter 2 — Basic MOS Device Physics
+
+### Topics to Cover
+
+#### General Considerations
+- MOSFET as a switch
+- MOSFET structure
+  - Length (L), Width (W)
+  - Effective channel length (Leff)
+  - Oxide thickness (tox)
+- MOS symbols
+  - Four-terminal vs three-terminal representations
+
+#### MOS I–V Characteristics
+- Threshold voltage (VTH)
+  - Inversion concept
+  - Implantation effects
+- Derivation of drain current equations
+  - Square-law behavior
+  - Overdrive voltage (VGS − VTH)
+  - Triode (linear) region
+  - Deep triode region
+  - Saturation region
+- Transconductance (gm)
+  - Definition: gm = ∂ID / ∂VGS
+  - Expression in saturation
+
+#### Second-Order Effects
+- Body (back-gate) effect
+  - Threshold voltage modulation
+  - Body-effect coefficient (γ)
+- Channel-length modulation (λ)
+  - Output resistance (ro)
+- Subthreshold conduction
+  - Weak inversion
+  - Exponential current dependence
+- Voltage limitations
+  - Gate oxide breakdown
+  - Punchthrough
+
+#### MOS Device Models
+- MOS device layout considerations
+- MOS capacitances
+  - CGS, CGD, CSB, CDB, CGB
+  - Region-dependent behavior
+- Small-signal model
+  - gm, ro, gmb
+- SPICE Level-1 MOS model
+- NMOS vs PMOS
+- Long-channel vs short-channel behavior
+
+#### Appendices
+- FinFET overview
+- MOS capacitor operation
+  - Accumulation
+  - Depletion
+  - Strong inversion
+
+---
+
+## Chapter 3 — Single-Stage Amplifiers
+
+### Topics to Cover
+
+#### General Concepts
+- Applications of single-stage amplifiers
+- Gain, speed, power dissipation
+- Analog design octagon
+
+#### Common-Source (CS) Stage
+- Resistive load
+  - Large-signal behavior
+  - Small-signal gain: Av = −gmRD
+  - Intrinsic gain: gmro
+- Diode-connected load
+  - Small-signal resistance ≈ 1/gm
+  - Linearity effects
+- Current-source load
+  - High gain from ro1 ∥ ro2
+- Active load (CMOS inverter)
+  - Maximum gm
+  - Supply noise sensitivity
+- Triode load
+- Source degeneration
+  - Linearization
+  - Gain reduction
+  - Output resistance enhancement
+
+#### Source Follower (Common-Drain)
+- Voltage buffer operation
+- Large-signal behavior
+- Small-signal gain < 1
+- Output resistance reduction
+- Body effect impact
+- Headroom and nonlinearity
+
+#### Common-Gate (CG) Stage
+- Positive gain
+- Low input impedance
+- Impedance transformation
+
+#### Cascode Stage
+- CS + CG combination
+- Small-signal analysis
+- High output impedance
+- Gain ≈ (gmro)²
+- Shielding property
+- Telescopic vs folded cascode
+
+---
+
+## Chapter 4 — Differential Amplifiers
+
+### Topics to Cover
+
+- Single-ended vs differential operation
+- Noise immunity and CMRR
+
+#### Basic Differential Pair
+- Current steering (qualitative)
+- Large-signal transfer characteristic
+- Maximum differential input voltage
+- Small-signal half-circuit analysis
+- Degenerated differential pair
+
+#### Common-Mode Response
+- Finite tail resistance (RSS)
+- Mismatch-induced CM-to-DM conversion
+- CMRR definition and calculation
+
+#### Differential Pair with MOS Loads
+- Diode-connected loads
+- Current-source loads
+- Gain vs headroom tradeoffs
+
+#### Gilbert Cell
+- Topology
+- Variable-gain amplifier
+- Analog multiplier operation
+
+---
+
+## Chapter 5 — Current Mirrors and Biasing Techniques
+
+### Topics to Cover
+
+#### Basic Current Mirrors
+- Need for supply-independent biasing
+- Diode-connected MOS principle
+- Scaling with (W/L)
+- Matching and sizing techniques
+
+#### Cascode Current Mirrors
+- Channel-length modulation suppression
+- Accurate cascode mirrors
+- Headroom penalty
+- Low-voltage cascode techniques
+
+#### Active Current Mirrors (5-Transistor OTA)
+- Large-signal operation
+- Small-signal Gm and Rout
+- Common-mode behavior
+- Headroom improvement techniques
+
+#### Biasing Techniques
+- CS biasing (external and self-biased)
+- CS with current-source load
+- CG biasing
+- Source follower biasing
+- Differential pair CM level setting
+
+---
+
+## Chapter 7 — Noise
+
+### Topics to Cover
+
+#### Statistical Noise Properties
+- Average power
+- Power spectral density (PSD)
+- White noise and filtering
+- PDFs
+- Correlated vs uncorrelated sources
+- Signal-to-noise ratio
+- Noise analysis procedure
+
+#### Noise Types
+- Thermal noise
+  - Resistors: 4kTR
+  - MOSFETs: 4kTγgm
+- Flicker (1/f) noise
+  - Area dependence
+  - Corner frequency
+
+#### Noise Representation
+- Output noise
+- Input-referred noise
+- Noise correlation effects
+
+#### Noise in Circuits
+- CS, CG, source follower
+- Cascode
+- Current mirrors
+- Differential pairs
+
+#### Noise–Power Tradeoff
+- Linear scaling principle
+
+---
+
+## Chapter 9 — Operational Amplifiers
+
+### Topics to Cover
+
+- Gain, bandwidth, slewing
+- Output swing
+- Linearity
+- Noise and offset
+- PSRR
+
+#### One-Stage Op Amps
+- Simple differential op amps
+- Telescopic cascode
+- Folded cascode
+- Linear scaling
+
+#### Two-Stage Op Amps
+- Need for two stages
+- Cascode input variants
+
+#### Gain Boosting
+- Regulated cascode principle
+- Frequency response impact
+
+#### Common-Mode Feedback (CMFB)
+- Need for CMFB
+- CM sensing methods
+- CM control loops
+- CMFB in two-stage designs
+
+#### Slew Rate
+- Definition
+- Class-AB techniques
+
+#### PSRR and Noise
+- Supply noise coupling paths
+
+---
+
+## Chapter 10 — Stability and Frequency Compensation
+
+### Topics to Cover
+
+- Barkhausen criterion
+- Gain crossover (GX)
+- Phase crossover (PX)
+- Multipole instability
+
+#### Phase Margin
+- Definition
+- Target values (≈60°)
+
+#### Frequency Compensation
+- Dominant pole strategy
+- Unity-gain bandwidth limits
+
+#### Two-Stage Compensation
+- Miller compensation
+- Pole splitting
+- RHP zero
+- Zero-nulling resistor (Rz)
+
+#### Slewing
+- SR ≈ ISS / CC
+
+#### Nyquist Criterion
+- Complex-plane stability analysis
+
+---
+
+## Output Expectations
+
+- Use **Markdown formatting**
+- Use **LaTeX for equations**
+- Use **tables for comparisons**
+- Explanations should be technically rigorous but readable
+- Assume reader has basic semiconductor and circuit theory knowledge
+
+---
+
+**End of README**
