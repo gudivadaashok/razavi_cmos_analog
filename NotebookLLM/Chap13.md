@@ -1,66 +1,77 @@
+**Chapter 13 – Introduction to Switched-Capacitor Circuits**
+
 Chapter 13 introduces Switched-Capacitor (SC) Circuits, which are essential building blocks in modern analog and mixed-signal integrated circuit design, particularly due to their superior performance in low-voltage CMOS technologies. SC circuits operate in the **discrete-time** domain, sampling and processing input signals at periodic intervals.
 
-### General Considerations and Principles
+## 13.1 General Considerations
 
-Switched-capacitor circuits were developed largely to overcome limitations inherent in continuous-time resistive feedback amplifiers when implemented in CMOS technology. CMOS operational amplifiers (op amps) typically achieve high open-loop gain by maximizing output resistance, which is then severely loaded by feedback resistors, thereby degrading circuit precision,.
+Switched-capacitor circuits were developed largely to overcome limitations inherent in continuous-time resistive feedback amplifiers when implemented in CMOS technology. CMOS operational amplifiers (op amps) typically achieve high open-loop gain by maximizing output resistance, which is then severely loaded by feedback resistors, thereby degrading circuit precision.
 
-The fundamental principle of SC circuits is the realization of precise resistance values using **capacitor ratios and clock frequency**, thereby providing a high degree of accuracy with reduced dependence on process and temperature variations,.
+The fundamental principle of SC circuits is the realization of precise resistance values using **capacitor ratios and clock frequency**, thereby providing a high degree of accuracy with reduced dependence on process and temperature variations.
 
-*   **Capacitive Feedback:** By replacing resistors with capacitors in feedback paths, the amplifier avoids continuous resistive loading on the op amp's high output impedance during the amplification phase,.
+*   **Capacitive Feedback:** By replacing resistors with capacitors in feedback paths, the amplifier avoids continuous resistive loading on the op amp's high output impedance during the amplification phase.
 *   **Time Domain Operation:** Operation occurs in discrete time, divided typically into two phases: **sampling** (acquiring the input signal) and **amplification** (processing the acquired charge).
 *   **CMOS Suitability:** CMOS is ideally suited for SC circuits because MOS devices function well as switches, and the technology inherently provides the high input impedance necessary to maintain charge integrity on sampling capacitors.
 
-### Sampling Switches
+## 13.2 Sampling Switches
 
 Sampling circuits typically consist of a MOSFET acting as a switch in series with a sampling capacitor ($C_H$).
 
-#### Implementation and Sizing
+### 13.2.1 MOSFETS as Switches
 
-MOSFETs function effectively as switches, capable of conducting current in either direction by simply exchanging the roles of the source and drain terminals,. They are preferred because they can achieve **zero-offset** operation, meaning there is no DC shift between the input and output voltages when the switch is fully closed.
+MOSFETs function effectively as switches, capable of conducting current in either direction by simply exchanging the roles of the source and drain terminals. They are preferred because they can achieve **zero-offset** operation, meaning there is no DC shift between the input and output voltages when the switch is fully closed.
 
-*   **Speed and Tradeoffs:** The sampling speed is limited by the **on-resistance ($R_{on}$)** of the switch and the sampling capacitance ($C_H$), setting the time constant ($\tau = R_{on} C_H$). Increasing speed requires a larger aspect ratio ($W/L$) and a smaller $C_H$.
 *   **Voltage Swing Limitations:** Single NMOS switches suffer performance degradation (increasing $R_{on}$) when the input voltage ($V_{in}$) approaches $V_{DD} - V_{THN}$. Similarly, PMOS switches struggle near $|V_{THP}|$ above ground. This effect limits the practical linear swing of $V_{in}$ to roughly half the supply voltage.
-*   **Complementary Switches:** To achieve **rail-to-rail** linear voltage swings, **complementary switches** (parallel NMOS and PMOS devices driven by complementary clocks) are used. When properly designed, their oppositely varying on-resistances minimize the overall equivalent resistance variation across the entire voltage range,.
+*   **Complementary Switches:** To achieve **rail-to-rail** linear voltage swings, **complementary switches** (parallel NMOS and PMOS devices driven by complementary clocks) are used. When properly designed, their oppositely varying on-resistances minimize the overall equivalent resistance variation across the entire voltage range.
 
-#### Precision and Charge-Injection Cancellation
+### 13.2.2 Speed Considerations
+
+The sampling speed is limited by the **on-resistance ($R_{on}$)** of the switch and the sampling capacitance ($C_H$), setting the time constant ($\tau = R_{on} C_H$). Increasing speed requires a larger aspect ratio ($W/L$) and a smaller $C_H$.
+
+### 13.2.3 Precision Considerations
 
 Precision is limited by three mechanisms that introduce error when the switch turns off:
 
-1.  **Channel Charge Injection ($\Delta Q_{ch}$):** The mobile channel charge ($Q_{ch}$) exits the source and drain terminals, depositing charge onto $C_H$. Since $Q_{ch}$ is dependent on $V_{in}$, this causes **gain error, DC offsets, and signal-dependent nonlinearity**,. The speed/precision trade-off is often considered independent of switch sizing or $C_H$ value, scaling roughly as $1/L^2$.
+1.  **Channel Charge Injection ($\Delta Q_{ch}$):** The mobile channel charge ($Q_{ch}$) exits the source and drain terminals, depositing charge onto $C_H$. Since $Q_{ch}$ is dependent on $V_{in}$, this causes **gain error, DC offsets, and signal-dependent nonlinearity**. The speed/precision trade-off is often considered independent of switch sizing or $C_H$ value, scaling roughly as $1/L^2$.
 2.  **Clock Feedthrough:** The gate-to-source/drain overlap capacitance couples the clock edge onto $C_H$, resulting primarily in a **constant offset voltage**.
 3.  ***kT/C* Noise:** Thermal noise generated by $R_{on}$ is sampled and stored on $C_H$, resulting in an rms noise voltage of $\sqrt{kT/C}$. **Design Insight:** To reduce this fundamental noise, the sampling capacitance ($C_H$) must be increased, which directly conflicts with the goal of maximizing speed.
 
-**Charge-Injection Cancellation (Timing Strategies):**
+### 13.2.4 Charge Injection Cancellation
 
 The key to high-precision SC operation lies in eliminating input-dependent charge injection. This is achieved by **timing strategies** known as **bottom-plate sampling**.
 
 *   **Timing Strategy:** In SC amplifiers, the **reset switch ($S_{2}$, typically connected to the virtual ground node)** is timed to turn off *before* the **input switch ($S_1$)**.
-*   **Conservation of Charge:** When the reset switch turns off, the node attached to the op amp input becomes **floating** and retains a constant total charge. Because this node is a virtual ground ($V_X \approx 0$), the voltage across $C_H$ is frozen at the input value ($V_{in}$). Subsequent channel charge injection from the input switch ($S_1$) or other switches does not affect the final settled output voltage, as the net charge transferred remains conserved,.
+*   **Conservation of Charge:** When the reset switch turns off, the node attached to the op amp input becomes **floating** and retains a constant total charge. Because this node is a virtual ground ($V_X \approx 0$), the voltage across $C_H$ is frozen at the input value ($V_{in}$). Subsequent channel charge injection from the input switch ($S_1$) or other switches does not affect the final settled output voltage, as the net charge transferred remains conserved.
 
-### Switched-Capacitor Amplifiers
+## 13.3 Switched-Capacitor Amplifiers
 
 SC amplifiers use capacitive feedback to set precise gains, primarily limited by the op amp's finite gain ($A_{v1}$) and the ratio of capacitors ($C_1/C_2$).
 
-| Amplifier Type | Nominal Gain | Settling Time $\tau$ (Insight) |
-| :--- | :--- | :--- |
-| **Unity-Gain Sampler** (Fig. 13.31) | 1 | $\tau \propto (C_{in} + C_L)/G_m$. Highly sensitive to $C_{in}$. |
-| **Noninverting Amplifier** (Fig. 13.43) | $C_1/C_2$ | $\tau \propto (C_1/C_2 + 1/C_2) \cdot C_{eq}/G_m$. Directly proportional to gain ratio $C_1/C_2$. |
-| **Precision Multiply-by-Two** (Fig. 13.53) | 2 | Achieves $2V_{in}$ with high speed due to favorable feedback factor. |
+### 13.3.1 Unity-Gain Sampler/Buffer
+*   **Nominal Gain:** 1
+*   **Settling Time $\tau$:** $\tau \propto (C_{in} + C_L)/G_m$. Highly sensitive to $C_{in}$.
+
+### 13.3.2 Noninverting Amplifier
+*   **Nominal Gain:** $C_1/C_2$
+*   **Settling Time $\tau$:** $\tau \propto (C_1/C_2 + 1/C_2) \cdot C_{eq}/G_m$. Directly proportional to gain ratio $C_1/C_2$.
+
+### 13.3.3 Precision Multiply-by-Two Circuit
+*   **Nominal Gain:** 2
+*   **Performance:** Achieves $2V_{in}$ with high speed due to favorable feedback factor.
 
 **Capacitor Ratio Selection:** The resulting **gain error** in these configurations is proportional to the nominal gain ratio and inversely proportional to the op amp gain, approximately $\propto (1+C_{1}/C_{2})/A_{v1}$. Thus, higher precision requires minimizing $C_{in}$ and maximizing $A_{v1}$.
 
-### Switched-Capacitor Integrators
+## 13.4 Switched-Capacitor Integrator
 
 SC circuits can emulate continuous-time operation, notably the integrator function ($V_{out} \propto -\int V_{in} dt$).
 
-*   **Physical Intuition:** An SC integrator replaces the input resistor of a continuous-time integrator with a capacitor ($C_1$) that is switched, realizing an equivalent resistance of $R_{eq} = (C_1 f_{CK})^{-1}$,.
+*   **Physical Intuition:** An SC integrator replaces the input resistor of a continuous-time integrator with a capacitor ($C_1$) that is switched, realizing an equivalent resistance of $R_{eq} = (C_1 f_{CK})^{-1}$.
 *   **Operation:** In the sampling phase, $C_1$ acquires $V_{in}$. In the integration phase, the charge $Q = C_1 V_{in}$ is transferred to the integrating capacitor $C_2$. The output voltage is the accumulated result: $V_{out}[k T_{CK}] = V_{out}[(k-1) T_{CK}] - V_{in}[(k-1) T_{CK}] \cdot C_1/C_2$.
 *   **Parasitic-Insensitive Integrator (Design Tradeoffs):** The preferred topology (Fig. 13.59) resolves issues related to switch **junction capacitance nonlinearity** ($C_j$) and charge injection. By ensuring that the voltage across $C_j$ changes only minimally (switching between $V_{in}$ and the virtual ground node), charge flow due to $C_j$ nonlinearity is effectively eliminated.
 
-### Switched-Capacitor Common-Mode Feedback (CMFB)
+## 13.5 Switched-Capacitor Common-Mode Feedback
 
 High-gain differential op amps require a mechanism to stabilize the output Common-Mode (CM) level, as differential feedback alone cannot define this value. SC CMFB provides a solution that avoids the resistive loading inherent in continuous-time CMFB using high-value resistors.
 
 *   **Principle:** The output CM level ($V_{out,CM}$) is sensed by capacitors ($C_1, C_2$), which store the appropriate voltage needed to regulate the bias current source (e.g., $M_5$) of the differential pair.
-*   **Operation:** In the reset mode, the current sources of the amplifier force the output $V_{out,CM}$ to a predetermined level, and this level is stored on the CMFB capacitors,. In the amplification mode, the CMFB network compares the instantaneous $V_{out,CM}$ to the stored reference, generating an error signal to adjust a bias current source, thereby correcting any CM drift.
+*   **Operation:** In the reset mode, the current sources of the amplifier force the output $V_{out,CM}$ to a predetermined level, and this level is stored on the CMFB capacitors. In the amplification mode, the CMFB network compares the instantaneous $V_{out,CM}$ to the stored reference, generating an error signal to adjust a bias current source, thereby correcting any CM drift.
 *   **Accuracy/Noise:** SC CMFB is advantageous because it avoids loading the op amp's high output impedance. However, similar to input switches, the switches in the CMFB network are susceptible to **leakage currents** that slowly corrupt the stored reference voltage, necessitating periodic refreshing.
