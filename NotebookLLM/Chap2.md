@@ -195,195 +195,36 @@ The continuous scaling of CMOS technology introduces several performance trade-o
 The need for a high degree of rigour in dealing with these effects means that analog design often involves a complex trade-off between maximizing performance metrics like gain and bandwidth while minimizing susceptibility to noise and non-ideal behaviours,. This ongoing balance is what defines the challenge of modern CMOS integrated circuit design.
 
 ---
+
 ## Voltage-controlled resistor
 
 The MOSFET operates fundamentally as a controlled switch. The study of Metal-Oxide-Semiconductor Field-Effect Transistors (MOSFETs) for analog Complementary Metal-Oxide-Semiconductor (CMOS) integrated circuits is crucial because transistors are often not treated simply as switches, and their performance is directly impacted by non-ideal device effects.
-What the concept is
+
+### What the concept is
 The concept involves using the MOSFET as a voltage-controlled resistor.
-1. Operation Region: This mode of operation occurs when the device is biased in the triode (linear) region, defined when the drain-source voltage (V 
-DS
-​	
- ) is less than or equal to the overdrive voltage (V 
-GS
-​	
- −V 
-TH
-​	
- ).
-2. Deep Triode: Specifically, for the channel to act like a linear resistor, the device must be in the deep triode region where V 
-DS
-​	
-  is much smaller than twice the overdrive voltage, V 
-DS
-​	
- ≪2(V 
-GS
-​	
- −V 
-TH
-​	
- ).
-3. Linear Resistor: In this state, the drain current is approximately linear with V 
-DS
-​	
- . The MOSFET acts as a linear resistor (R 
-on
-​	
- ), whose value is directly controlled by the overdrive voltage (V 
-GS
-​	
- −V 
-TH
-​	
- ).
-4. R 
-on
-​	
-  Expression: The on-resistance is given by the approximation: 
-R 
-on
-​	
- = 
-μ 
-n
-​	
- C 
-ox
-​	
-  
-L
-W
-​	
- (V 
-GS
-​	
- −V 
-TH
-​	
- )
-1
-​	
- 
-.
-Why it is used
+1. **Operation Region:** This mode of operation occurs when the device is biased in the triode (linear) region, defined when the drain-source voltage ($V_{DS}$) is less than or equal to the overdrive voltage ($V_{GS} - V_{TH}$).
+2. **Deep Triode:** Specifically, for the channel to act like a linear resistor, the device must be in the deep triode region where $V_{DS}$ is much smaller than twice the overdrive voltage, $V_{DS} \ll 2(V_{GS} - V_{TH})$.
+3. **Linear Resistor:** In this state, the drain current is approximately linear with $V_{DS}$. The MOSFET acts as a linear resistor ($R_{on}$), whose value is directly controlled by the overdrive voltage ($V_{GS} - V_{TH}$).
+4. **$R_{on}$ Expression:** The on-resistance is given by the approximation:
+   $$ R_{on} = \frac{1}{\mu_n C_{ox} \frac{W}{L} (V_{GS} - V_{TH})} $$
+### Why it is used
 The MOSFET operating as a switch or controlled resistor is essential for fundamental circuit functions:
-1. Digital Logic: The MOSFET serves as the basis of all digital logic (CMOS), connecting the source (S) and drain (D) when the gate voltage (V 
-G
-​	
- ) is high and isolating them when V 
-G
-​	
-  is low.
-2. Analog Circuits: MOSFETs operating as controllable resistors are crucial in many analog circuits. In Chapter 13, it is confirmed that MOSFETs also serve as switches in analog sampling circuits.
-3. Power Efficiency: When used as a switch, the device allows signals to pass or be blocked, contributing to the zero static power consumption characteristic of CMOS logic.
-Challenges and Limitations
+1. **Digital Logic:** The MOSFET serves as the basis of all digital logic (CMOS), connecting the source (S) and drain (D) when the gate voltage ($V_G$) is high and isolating them when $V_G$ is low.
+2. **Analog Circuits:** MOSFETs operating as controllable resistors are crucial in many analog circuits. In Chapter 13, it is confirmed that MOSFETs also serve as switches in analog sampling circuits.
+3. **Power Efficiency:** When used as a switch, the device allows signals to pass or be blocked, contributing to the zero static power consumption characteristic of CMOS logic.
+### Challenges and Limitations
 The use of MOSFETs as ideal switches or linear resistors is limited by inherent electrical and physical constraints:
-1. On-Resistance Variation / Harmonic Distortion: The resistance R 
-on
-​	
-  is inversely proportional to the overdrive voltage (V 
-GS
-​	
- −V 
-TH
-​	
- ). In practical sampling applications, the input signal voltage (V 
-in
-​	
- ) often varies the effective source voltage, meaning the Gate-Source voltage changes according to V 
-GS
-​	
- =V 
-Gate
-​	
- −V 
-in
-​	
- . Consequently, the on-resistance changes as the signal level changes. This variation introduces nonlinearity in the signal path, which results in harmonic distortion.
-2. Charge Injection: When the MOSFET switch is turned on, a channel (inversion layer) is formed beneath the gate oxide. The total charge stored in this inversion layer is given by Q 
-ch
-​	
- =WLC 
-ox
-​	
- (V 
-G
-​	
- −V 
-in
-​	
- −V 
-TH
-​	
- ). When the gate command turns the switch off, this stored channel charge must exit through the source and drain terminals, a phenomenon called channel charge injection. When operating in a sampling circuit, the charge dumped onto the sampling capacitor introduces a voltage error. This non-ideal behaviour contributes gain error, DC offsets, and nonlinearity (distortion).
-3. Clock Feedthrough: The overlap capacitance between the gate and the source/drain terminals also causes the clock signal transitions to be coupled to the sampling capacitor when the switch turns off, introducing an error known as clock feedthrough.
-Practical techniques to mitigate
+1. **On-Resistance Variation / Harmonic Distortion:** The resistance $R_{on}$ is inversely proportional to the overdrive voltage ($V_{GS} - V_{TH}$). In practical sampling applications, the input signal voltage ($V_{in}$) often varies the effective source voltage, meaning the Gate-Source voltage changes according to $V_{GS} = V_{Gate} - V_{in}$. Consequently, the on-resistance changes as the signal level changes. This variation introduces nonlinearity in the signal path, which results in harmonic distortion.
+2. **Charge Injection:** When the MOSFET switch is turned on, a channel (inversion layer) is formed beneath the gate oxide. The total charge stored in this inversion layer is given by $Q_{ch} = WLC_{ox}(V_G - V_{in} - V_{TH})$. When the gate command turns the switch off, this stored channel charge must exit through the source and drain terminals, a phenomenon called channel charge injection. When operating in a sampling circuit, the charge dumped onto the sampling capacitor introduces a voltage error. This non-ideal behaviour contributes gain error, DC offsets, and nonlinearity (distortion).
+3. **Clock Feedthrough:** The overlap capacitance between the gate and the source/drain terminals also causes the clock signal transitions to be coupled to the sampling capacitor when the switch turns off, introducing an error known as clock feedthrough.
+### Practical techniques to mitigate
 To improve linearity and precision, several techniques are employed:
-1. Transmission Gate (Complementary Switches):
-    ◦ This technique involves connecting parallel NMOS and PMOS transistors to serve as the switch.
-    ◦ The NMOS on-resistance (R 
-on,N
-​	
- ) increases as the input signal approaches V 
-DD
-​	
- −V 
-TH,N
-​	
- .
-    ◦ Conversely, the PMOS on-resistance (R 
-on,P
-​	
- ) decreases as the input signal approaches the threshold voltage ∣V 
-TH,P
-​	
- ∣.
-    ◦ By carefully sizing the two transistors (choosing (W/L) 
-N
-​	
-  and (W/L) 
-P
-​	
-  such that μ 
-n
-​	
- C 
-ox
-​	
- (W/L) 
-N
-​	
- =μ 
-p
-​	
- C 
-ox
-​	
- (W/L) 
-P
-​	
- ), the combined equivalent resistance (R 
-on,eq
-​	
- ) can be made relatively constant across the input voltage range. This minimizes signal-dependent resistance variations that cause distortion.
-2. Dummy Switch:
-    ◦ A dummy switch, realized as a second transistor, is added to the circuit to cancel the channel charge injected by the main transistor.
-    ◦ In one application, the output node connects to a half-sized dummy transistor (W 
-2
-​	
- =0.5W 
-1
-​	
-  and L 
-2
-​	
- =L 
-1
-​	
- ) which is driven by the complementary clock ( 
-CK
- ). This technique aims to cancel the charge Δq 
-1
-​	
-  deposited by the main transistor.
-    ◦ The dummy switch topology is also effective in suppressing the clock feedthrough error
+1. **Transmission Gate (Complementary Switches):**
+    *   This technique involves connecting parallel NMOS and PMOS transistors to serve as the switch.
+    *   The NMOS on-resistance ($R_{on,N}$) increases as the input signal approaches $V_{DD} - V_{TH,N}$.
+    *   Conversely, the PMOS on-resistance ($R_{on,P}$) decreases as the input signal approaches the threshold voltage $|V_{TH,P}|$.
+    *   By carefully sizing the two transistors (choosing $(W/L)_N$ and $(W/L)_P$ such that $\mu_n C_{ox} (W/L)_N = \mu_p C_{ox} (W/L)_P$), the combined equivalent resistance ($R_{on,eq}$) can be made relatively constant across the input voltage range. This minimizes signal-dependent resistance variations that cause distortion.
+2. **Dummy Switch:**
+    *   A dummy switch, realized as a second transistor, is added to the circuit to cancel the channel charge injected by the main transistor.
+    *   In one application, the output node connects to a half-sized dummy transistor ($W_2 = 0.5 W_1$ and $L_2 = L_1$) which is driven by the complementary clock ($\overline{CK}$). This technique aims to cancel the charge $\Delta q_1$ deposited by the main transistor.
+    *   The dummy switch topology is also effective in suppressing the clock feedthrough error
