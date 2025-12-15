@@ -1154,168 +1154,91 @@ A start-up circuit is required to inject a small current into the loop (e.g., in
 
 # Topic 9. Switched-Capacitor Circuits
 
-## Question 59
-**Original:** Explain the operation of the "Flip-Around" Switched-Capacitor Sample-and-Hold circuit. What is its primary advantage over the basic unity-gain sampler?
-**Corrected:** (Generated Question)
+## 13.1 General
 
+### Question 59
+**Concept:** What is the fundamental principle of Switched-Capacitor (SC) circuits, and why are they preferred over continuous-time resistor-based circuits in CMOS technology?
+**Answer:**
+**Principle:**
+SC circuits emulate resistors using capacitors and switches. A capacitor $C$ switched at frequency $f_s$ transfers charge $Q = C V$ every cycle, creating an average current $I_{avg} = C V f_s$. This is equivalent to a resistor $R_{eq} = \frac{V}{I_{avg}} = \frac{1}{f_s C}$.
+**Why Preferred:**
+**Accuracy:** In CMOS, absolute resistor values ($R$) and capacitor values ($C$) vary significantly ($\pm 20\%$). However, the **ratio** of capacitors ($C_1/C_2$) can be matched to within 0.1%. Since SC circuit gain depends on capacitor ratios ($C_S/C_F$), they achieve much higher precision than resistor-based amplifiers.
+
+---
+
+## 13.2 Sampling Switches
+
+### 13.2.1 MOSFETs as Switches & 13.2.4 Charge Injection
+### Question 60
+**Concept:** Explain "Charge Injection" and "Clock Feedthrough" in MOS sampling switches. How does "Bottom-Plate Sampling" mitigate these errors?
+**Answer:**
+**Charge Injection:** When a MOS switch turns off, the channel charge ($Q_{ch} = WLC_{ox}V_{OV}$) exits to the source and drain, causing a voltage error $\Delta V = Q_{ch}/C_H$. This error is signal-dependent (non-linear) because $Q_{ch}$ depends on $V_{in}$.
+**Clock Feedthrough:** The clock signal couples to the sampling capacitor via overlap capacitance ($C_{ov}$), causing a voltage step.
+**Bottom-Plate Sampling:**
+This technique turns off the switch connected to the "bottom" plate (ground/virtual ground) *first*. Since this node is at a fixed potential, the charge injected is constant (independent of $V_{in}$). This turns a non-linear distortion error into a constant DC offset, which can be easily removed by differential processing.
+
+### 13.2.2 Speed & 13.2.3 Precision
+### Question 61
+**Concept:** What determines the "Speed" and "Precision" of a sampling switch? Discuss the trade-off involved in sizing the switch.
+**Answer:**
+**Speed:** Determined by the RC time constant $\tau = R_{on} C_H$. The circuit must settle to within the required accuracy (e.g., 0.1%) within the sampling phase ($T/2$). $R_{on}$ depends on switch size ($W/L$).
+**Precision:** Limited by **leakage** currents (subthreshold conduction) which drain charge during the hold phase, and **thermal noise** ($kT/C$).
+**Trade-off:**
+To increase speed (reduce $R_{on}$), we must increase the switch width $W$. However, increasing $W$ increases the parasitic capacitance and channel charge, which worsens **Charge Injection** and **Clock Feedthrough** errors.
+
+---
+
+## 13.3 SC Amplifiers
+
+### 13.3.1 Unity-Gain Sampler/Buffer
+### Question 62
+**Concept:** Describe the "Flip-Around" Sample-and-Hold architecture. Why is it advantageous for high-speed applications?
 **Answer:**
 **Operation:**
-1.  **Sampling Phase ($\phi_1$):** The sampling capacitor $C_S$ is connected between the input $V_{in}$ and ground (or a common-mode voltage). The charge stored is $Q = C_S V_{in}$.
-2.  **Hold Phase ($\phi_2$):** The bottom plate of $C_S$ is disconnected from $V_{in}$ and connected to the output. The top plate is connected to the virtual ground of the OpAmp. The OpAmp is in a unity-gain feedback configuration (often with the capacitor itself in the feedback path). The charge is preserved, so $V_{out} \approx V_{in}$.
-
+1.  **Sample:** Input capacitor $C_S$ samples $V_{in}$ to ground.
+2.  **Hold:** The bottom plate of $C_S$ connects to the output, and the top plate connects to the OpAmp input. The OpAmp forces the charge to stay on $C_S$, effectively placing $C_S$ in the feedback loop.
 **Advantage:**
-**Feedback Factor ($\beta$):** In the flip-around topology, the feedback factor is $\beta \approx 1$ (since the output is directly connected to the input via the capacitor). This maximizes the closed-loop bandwidth and speed of the OpAmp compared to charge-transfer topologies where $\beta < 1$.
+**Feedback Factor ($\beta$):** The feedback factor is $\beta \approx 1$ (ideal unity gain). This maximizes the closed-loop bandwidth ($BW_{closed} = \beta \times GBW$), making it faster and more power-efficient than charge-transfer topologies where $\beta < 1$.
+
+### 13.3.2 Non-inverting Amplifier
+### Question 63
+**Concept:** Derive the gain of a standard SC Non-Inverting Amplifier. What is the primary limitation imposed by the OpAmp's finite gain?
+**Answer:**
+**Gain:**
+During sampling, $Q_S = C_S V_{in}$. During amplification, this charge is transferred to the feedback capacitor $C_F$. Conservation of charge implies $C_S V_{in} = C_F V_{out}$, so **Gain = $C_S/C_F$**.
+**Finite Gain Error:**
+If the OpAmp has finite gain $A$, the virtual ground is not perfect. The actual gain is $A_{closed} \approx \frac{C_S}{C_F} \frac{1}{1 + \frac{1}{A\beta}}$. This creates a static gain error proportional to $1/A$.
+
+### 13.3.3 Precision Multiply-by-Two Circuit
+### Question 64
+**Concept:** How does a "Multiply-by-Two" circuit work in Pipelined ADCs, and how is capacitor mismatch handled?
+**Answer:**
+**Operation:**
+Uses two equal capacitors $C_1=C_2=C$. Both sample $V_{in}$. In the next phase, $C_1$ is feedback, $C_2$ injects charge. $V_{out} = V_{in} + (C_2/C_1)V_{in} \approx 2V_{in}$.
+**Mismatch Handling:**
+If $C_1 \neq C_2$, the gain is not exactly 2. **Capacitor Shuffling (Dynamic Element Matching)** is used to randomly swap $C_1$ and $C_2$ every cycle. This averages the gain error to zero over time, converting it into noise that can be filtered.
 
 ---
 
+## 13.4 SC Integrator
 
-
-
-
-## Question 60
-**Original:** What are "Charge Injection" and "Clock Feedthrough" in switched-capacitor circuits? How do they affect precision, and what are two techniques to minimize their impact?
-**Corrected:** (Generated Question)
-
+### Question 65
+**Concept:** What is "Integrator Leakage" in SC integrators, and what causes it?
 **Answer:**
-**Definitions:**
-1.  **Charge Injection:** When a MOS switch turns off, the charge stored in its channel ($Q_{ch}$) must exit to the source and drain. This injected charge creates a voltage error step $\Delta V = \Delta Q / C_{sample}$.
-2.  **Clock Feedthrough:** The clock signal couples directly to the sampling capacitor through the Gate-Drain/Gate-Source overlap capacitance ($C_{ov}$), causing a voltage step.
-
-**Impact:**
-They introduce DC offsets and signal-dependent errors (non-linearity) into the sampled voltage, degrading the precision of the circuit.
-
-**Mitigation:**
-1.  **Bottom-Plate Sampling:** A switching technique that opens the switch connected to the "bottom" plate (ground/virtual ground) first. This makes the charge injection signal-independent (constant offset), which can be cancelled differentially.
-2.  **Differential Operation:** Using fully differential circuits cancels the common-mode component of the charge injection and feedthrough.
+**Leakage:**
+An ideal integrator has a pole at DC ($z=1$) and infinite DC gain. "Leakage" means the pole moves inside the unit circle ($z < 1$), causing the stored value to decay over time.
+**Cause:**
+**Finite OpAmp Gain ($A$).** The finite gain means the OpAmp cannot perfectly maintain the virtual ground, allowing some charge to remain on the input capacitor or leak away. The transfer function becomes $H(z) \approx \frac{C_S}{C_F} \frac{z^{-1}}{1 - (1 - \frac{C_S}{C_F}\frac{1}{A})z^{-1}}$.
 
 ---
 
+## 13.5 SC Common-Mode Feedback (CMFB)
 
-
-
-
-## Question 61
-**Original:** Derive the gain of a Switched-Capacitor Non-Inverting Amplifier. Why is this topology preferred over a resistive amplifier for high-precision applications?
-**Corrected:** (Generated Question)
-
+### Question 66
+**Concept:** Why is Switched-Capacitor CMFB preferred over continuous-time resistive CMFB in high-performance OpAmps?
 **Answer:**
-**Gain Derivation:**
-1.  **Sampling ($\phi_1$):** Input capacitor $C_S$ charges to $V_{in}$ ($Q_S = C_S V_{in}$). Feedback capacitor $C_F$ is discharged ($Q_F = 0$).
-2.  **Amplification ($\phi_2$):** $C_S$ is connected to the virtual ground. To satisfy charge conservation at the virtual ground node, the charge from $C_S$ must flow onto $C_F$.
-    $Q_{final} = Q_{initial} \implies C_F V_{out} = C_S V_{in}$
-    **Gain:** $V_{out} / V_{in} = C_S / C_F$
-
-**Why Preferred:**
-**Matching Accuracy:** The gain is determined by the ratio of capacitor areas ($C_S/C_F$). In CMOS technology, capacitor ratios can be matched to within 0.1% (or better with layout techniques), whereas resistor ratios typically have 1-2% mismatch. This allows for much higher gain precision.
-
----
-
-
-
-
-
-## Question 62
-**Original:** Describe the "Multiply-by-Two" circuit used in Pipelined ADCs. What is the primary source of error in this circuit, and how is it mitigated?
-**Corrected:** (Generated Question)
-
-**Answer:**
-**Description:**
-It is a switched-capacitor amplifier configured for a gain of exactly 2. It typically uses two equal capacitors $C_1 = C_2 = C$.
-1.  During sampling, both capacitors sample the input $V_{in}$.
-2.  During amplification, one capacitor flips around the OpAmp (feedback), and the other dumps its charge into the feedback capacitor.
-    $V_{out} = V_{in} + \frac{C_2}{C_1} V_{in} = 2 V_{in}$ (if $C_1=C_2$).
-
-**Primary Error:**
-**Capacitor Mismatch:** If $C_1 \neq C_2$, the gain deviates from 2. This gain error translates directly to Differential Non-Linearity (DNL) in the ADC.
-
-**Mitigation:**
-**Capacitor Shuffling (DEM):** Randomly swapping the roles of the sampling and feedback capacitors every clock cycle averages out the mismatch error over time, converting the systematic gain error into random noise.
-
----
-
-
-
-
-
-## Question 63
-**Original:** What is a Switched-Capacitor Integrator? Explain the problem of "Integrator Leakage" and its cause.
-**Corrected:** (Generated Question)
-
-**Answer:**
-**SC Integrator:**
-A circuit that accumulates charge on a feedback capacitor $C_F$ cycle by cycle.
-$V_{out}[n] = V_{out}[n-1] + \frac{C_S}{C_F} V_{in}[n-1]$.
-It implements the discrete-time transfer function $H(z) \propto \frac{z^{-1}}{1 - z^{-1}}$.
-
-**Integrator Leakage:**
-**Problem:** Ideally, the DC gain of the integrator is infinite (pole at $z=1$). "Leakage" means the pole moves slightly inside the unit circle ($z < 1$), so the integrator slowly "forgets" or decays its stored value over time.
-**Cause:** **Finite OpAmp Gain.** If the OpAmp has finite gain $A$, the virtual ground is not perfect. A fraction of the charge remains on the input capacitor or leaks away, leading to a gain error term $(1 - 1/A)$.
-
----
-
-
-
-
-
-## Question 64
-**Original:** Why is Switched-Capacitor Common-Mode Feedback (SC-CMFB) often preferred over Continuous-Time (Resistive) CMFB in high-gain amplifiers?
-**Corrected:** (Generated Question)
-
-**Answer:**
-**Preference for SC-CMFB:**
-1.  **No Resistive Loading:** Resistive CMFB requires sensing resistors connected to the output nodes. These resistors appear in parallel with the amplifier's output impedance, drastically reducing the open-loop gain ($A_v = g_m (r_o || R_{CMFB})$). SC-CMFB uses capacitors, which are open circuits at DC, preserving the full high DC gain of the amplifier.
-2.  **Swing:** SC-CMFB circuits can be designed to support large output swings without consuming excessive static power or limiting headroom, unlike resistive dividers.
-
----
-
-
-
-
-
-## Question 65
-**Original:** How does the finite DC gain of an OpAmp affect the accuracy of a Switched-Capacitor amplifier?
-**Corrected:** (Generated Question)
-
-**Answer:**
-**Effect:**
-In an ideal SC amplifier with gain $C_S/C_F$, the virtual ground is perfect. With finite gain $A$, the virtual ground moves, causing incomplete charge transfer.
-**Error:**
-The actual gain becomes $A_{closed} \approx \frac{C_S}{C_F} \times \frac{1}{1 + \frac{1}{A\beta}}$.
-The gain error is proportional to $1/A$. For high precision (e.g., 10-bit ADC), the OpAmp gain must be very high (> 60-70 dB) to keep this static error negligible.
-
----
-
-
-
-
-
-## Question 66
-**Original:** Define "Settling Time" in Switched-Capacitor circuits. What two factors primarily determine it?
-**Corrected:** (Generated Question)
-
-**Answer:**
-**Definition:**
-The time required for the OpAmp output to reach and stay within a specified error band (e.g., 0.1%) of the final value after a step input.
-**Factors:**
-1.  **Slew Rate (Large Signal):** Determines the initial ramp-up speed. Limited by tail current ($I/C_L$).
-2.  **Bandwidth / Time Constant (Small Signal):** Determines the exponential settling tail. $\tau = 1 / (2\pi \cdot GBW \cdot \beta)$.
-The total settling time is the sum of the slewing period and the linear settling period.
-
----
-
-
-
-
-
-## Question 67
-**Original:** What is "Correlated Double Sampling" (CDS)? What two major errors in Switched-Capacitor circuits does it reduce?
-**Corrected:** (Generated Question)
-
-**Answer:**
-**Definition:**
-CDS is a technique where the amplifier's error (noise + offset) is sampled during a "reset" phase and then subtracted from the signal during the "amplification" phase.
-**Errors Reduced:**
-1.  **DC Offset:** Since the offset is constant, subtracting the two samples cancels it out completely.
-2.  **1/f Noise (Flicker Noise):** Since 1/f noise varies slowly, the noise value in the two samples is highly correlated. Subtracting them significantly attenuates the low-frequency noise power.
+**Advantages:**
+1.  **No Resistive Loading:** SC-CMFB uses capacitors to sense the output common-mode level. Since capacitors are open circuits at DC, they do not load the amplifier's output impedance, preserving the high DC gain ($A_v$). Resistive CMFB degrades gain significantly.
+2.  **Signal Swing:** SC-CMFB allows for rail-to-rail output swings without the headroom limitations often imposed by resistive dividers or active CMFB circuits.
 
 
